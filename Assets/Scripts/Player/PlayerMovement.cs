@@ -46,11 +46,11 @@ public class PlayerMovement : MonoBehaviour
         {
             rb.velocity += Vector2.up * Physics2D.gravity.y * (fallRate - 1) * Time.deltaTime;
         }
-        else if (rb.velocity.y > 0 && !Keyboard.current[Key.Space].IsActuated() 
-            || !Gamepad.current[UnityEngine.InputSystem.LowLevel.GamepadButton.South].IsActuated())
+        else if (rb.velocity.y > 0 && !Keyboard.current[Key.Space].IsActuated())
         {
             rb.velocity += Vector2.up * Physics2D.gravity.y * (lowJumpRate - 1) * Time.deltaTime;
         }
+        //Keyboard.current[Key.Space].IsActuated() || !Gamepad.current[UnityEngine.InputSystem.LowLevel.GamepadButton.South].IsActuated()
     }
 
     public void OnMove(InputAction.CallbackContext context)
