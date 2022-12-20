@@ -6,27 +6,25 @@ using UnityEngine.InputSystem;
 public class PlayerMovement : MonoBehaviour
 {
     [Header("Player Movement")]
-    [SerializeField] float maxSpeed = 500f;
-    [SerializeField] float jumpForce = 300f;
+    [SerializeField, Range(100f, 500f)] float maxSpeed = 200f;
+    [SerializeField, Range(100f, 500f)] float jumpForce = 325f;
     private bool canDoubleJump;
     private RaycastHit2D isPlayerOnGround;
-    [SerializeField, Range(0f, 10f)] float accelerationSpeed;
-    [SerializeField, Range(0f, 10f)] float decelerationSpeed;
-    [SerializeField, Range(0f, 5f)] float fallRate;
-    [SerializeField, Range(0f, 5f)] float lowJumpRate;
+    [SerializeField, Range(0f, 10f)] float accelerationSpeed = 2.5f;
+    [SerializeField, Range(0f, 10f)] float decelerationSpeed = 3f;
+    [SerializeField, Range(0f, 5f)] float fallRate = 4.5f;
+    [SerializeField, Range(0f, 5f)] float lowJumpRate = 2.5f;
 
     [Header("Player Conditions")]
     [SerializeField] float rayDistance;
     [SerializeField] LayerMask groundLayer;
     Vector2 movementInput;
     Rigidbody2D rb;
+    bool turning;
 
     PlayerInput playerInput;
     InputAction jumpAction;
     InputAction moveAction;
-
-    bool changeDirection => (rb.velocity.x > 0f && moveAction.ReadValue<float>() < 0f)
-        || (rb.velocity.x < 0f && moveAction.ReadValue<float>() > 0f);
 
     private void Awake()
     {
@@ -85,13 +83,22 @@ public class PlayerMovement : MonoBehaviour
 
     private void CalcAccelerationAndDeceleration()
     {
+        rb.velocity = Vector2.ClampMagnitude(rb.velocity, maxSpeed);
+        //if (moveAction.WasReleasedThisFrame())
+        //{
+        //    turning = true;
+        //}
+        //else
+        //{
+        //    turning = false;
+        //}
+
         float force = movementInput.x * maxSpeed * accelerationSpeed * Time.deltaTime;
-        if (Mathf.Abs(movementInput.x) < 0.1f)
+        if (Mathf.Abs(movementInput.x) < 0.1f)// && !turning)
         {
             force = -rb.velocity.x * decelerationSpeed;
         }
         rb.AddForce(new Vector2(force, 0));
-        rb.velocity = Vector2.ClampMagnitude(rb.velocity, maxSpeed);
         //rb.AddForce(movementInput * maxSpeed * Time.deltaTime);
     }
 
