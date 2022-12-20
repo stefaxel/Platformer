@@ -133,7 +133,6 @@ GameObject:
   m_Component:
   - component: {fileID: 422779220}
   - component: {fileID: 422779219}
-  - component: {fileID: 422779218}
   - component: {fileID: 422779217}
   m_Layer: 3
   m_Name: Ground
@@ -168,27 +167,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!50 &422779218
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 422779216}
-  m_BodyType: 2
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 0
-  m_Material: {fileID: 0}
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 7
 --- !u!212 &422779219
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -384,7 +362,6 @@ GameObject:
   m_Component:
   - component: {fileID: 608692278}
   - component: {fileID: 608692277}
-  - component: {fileID: 608692276}
   - component: {fileID: 608692275}
   m_Layer: 3
   m_Name: Ground (1)
@@ -419,27 +396,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!50 &608692276
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 608692274}
-  m_BodyType: 2
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 0
-  m_Material: {fileID: 0}
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 7
 --- !u!212 &608692277
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -628,7 +584,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1604831555}
   - component: {fileID: 1604831554}
-  - component: {fileID: 1604831553}
   - component: {fileID: 1604831552}
   m_Layer: 3
   m_Name: Ground (2)
@@ -663,27 +618,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!50 &1604831553
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1604831551}
-  m_BodyType: 2
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 0
-  m_Material: {fileID: 0}
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 7
 --- !u!212 &1604831554
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -898,11 +832,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c6e8609993c55ca4d87c2630f76ce8d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movementSpeed: 500
+  maxSpeed: 400
   jumpForce: 300
-  decceleration: 0
-  acceleration: 0
-  targetSpeed: 0
+  accelerationSpeed: 1.75
+  decelerationSpeed: 4
   fallRate: 4.5
   lowJumpRate: 2.5
   rayDistance: 0.6

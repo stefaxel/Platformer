@@ -44,38 +44,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        rb.AddForce(movementInput * maxSpeed * Time.deltaTime);
-
-        //float speedDifference = targetSpeed - rb.velocity.x;
-        //float movement = speedDifference * acceleration;
-
-        //rb.AddForce(movementInput * accelerationSpeed * Time.deltaTime);
-        //if (Mathf.Abs(rb.velocity.x) > maxSpeed)
-        //    rb.velocity = new Vector2(Mathf.Sign(rb.velocity.x) * maxSpeed, rb.velocity.y);
-
-        //if(Mathf.Abs(moveAction.ReadValue<float>()) < 0.4f || changeDirection)
-        //{
-        //    rb.drag = decelerationSpeed;
-        //}
-        //else
-        //{
-        //    rb.drag = 0f;
-        //}
-
-        //if (moveAction.IsPressed())
-        //{
-        //    playerVelocity += accelRate * Time.deltaTime;
-        //    playerVelocity = Mathf.Min(playerVelocity, maxSpeed);
-
-        //    rb.AddForce(movementInput * playerVelocity * Time.deltaTime);
-        //}
-        //if (!moveAction.IsPressed())
-        //{
-        //    playerVelocity += decelRate * Time.deltaTime;
-        //    playerVelocity = Mathf.Max(playerVelocity, 0);
-
-        //    rb.AddForce(movementInput * playerVelocity * Time.deltaTime);
-        //}
+        CalcAccelerationAndDeceleration();
     }
 
     private void Update()
@@ -112,6 +81,18 @@ public class PlayerMovement : MonoBehaviour
             canDoubleJump = false;
         }
 
+    }
+
+    private void CalcAccelerationAndDeceleration()
+    {
+        float force = movementInput.x * maxSpeed * accelerationSpeed * Time.deltaTime;
+        if (Mathf.Abs(movementInput.x) < 0.1f)
+        {
+            force = -rb.velocity.x * decelerationSpeed;
+        }
+        rb.AddForce(new Vector2(force, 0));
+        rb.velocity = Vector2.ClampMagnitude(rb.velocity, maxSpeed);
+        //rb.AddForce(movementInput * maxSpeed * Time.deltaTime);
     }
 
     bool IsGrounded()
