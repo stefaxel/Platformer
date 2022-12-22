@@ -8,6 +8,7 @@ public class PlayerMovement : MonoBehaviour
 {
     [Header("Player Movement")]
     [SerializeField, Range(100f, 500f)] float maxSpeed = 200f;
+    [SerializeField, Range(100f, 500f)] float climbSpeed = 100f;
     [SerializeField, Range(100f, 500f)] float jumpForce = 325f;
     private bool canDoubleJump;
     private RaycastHit2D isPlayerOnGround;
@@ -22,15 +23,19 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float wallJumpCooldown;
     [SerializeField] LayerMask groundLayer;
     [SerializeField] LayerMask wallLayer;
-    Vector2 movementInput;
+    Vector2 movementInputX;
+    Vector2 movementInputY;
     Rigidbody2D rb;
     bool turning;
-    bool canMove = true;
+    bool canMoveX = true;
+    private bool canMoveY = false;
+    private bool wallGrab = false;
     bool isFacingRight = true;
 
     PlayerInput playerInput;
     InputAction jumpAction;
-    InputAction wallAction;
+    InputAction wallClimbAction;
+    InputAction moveAction;
 
     private void Awake()
     {
@@ -38,7 +43,8 @@ public class PlayerMovement : MonoBehaviour
         playerInput = GetComponent<PlayerInput>();
 
         jumpAction = playerInput.actions["Jump"];
-        wallAction = playerInput.actions["WallClimb"];
+        wallClimbAction = playerInput.actions["WallClimb"];
+        moveAction = playerInput.actions["Move"];
     }
 
     private void FixedUpdate()
@@ -56,11 +62,11 @@ public class PlayerMovement : MonoBehaviour
         {
             rb.velocity += Vector2.up * Physics2D.gravity.y * (lowJumpRate - 1) * Time.deltaTime;
         }
-        if (movementInput.x > 0 && !isFacingRight)
+        if (movementInputX.x > 0 && !isFacingRight)
         {
             Flip();
         }
-        if (movementInput.x < 0 && isFacingRight)
+        if (movementInputX.x < 0 && isFacingRight)
         {
             Flip();
         }
@@ -69,25 +75,20 @@ public class PlayerMovement : MonoBehaviour
 
     public void OnMove(InputAction.CallbackContext context)
     {
-        if (canMove)
+        if (canMoveX)
         {
-            movementInput = context.ReadValue<Vector2>();
+            movementInputX = context.ReadValue<Vector2>();
+        }
+        if (canMoveY)
+        {
+            movementInputY = context.ReadValue<Vector2>();
         }
 
     }
 
     public void OnJump(InputAction.CallbackContext context)
     {
-        if (IsGrounded() && context.performed)
-        {
-            rb.AddForce(Vector2.up * jumpForce);
-            canDoubleJump = true;
-        }
-        if (context.action.triggered && !IsGrounded() && canDoubleJump)
-        {
-            rb.AddForce(Vector2.up * jumpForce);
-            canDoubleJump = false;
-        }
+        Jump(context);
 
         //if (!IsGrounded() && IsWallClimbing() && context.performed && wallAction.IsPressed())
         //{
@@ -99,34 +100,52 @@ public class PlayerMovement : MonoBehaviour
 
     public void WallClimb(InputAction.CallbackContext context)
     {
-        if (context.performed && IsWallClimbing())
-        {
-            canMove = false;
+        WallGrab(context);
+    }
 
-            Debug.Log("Shift key is being held can wall climb/jump");
+    private void Jump(InputAction.CallbackContext context)
+    {
+        if (IsGrounded() && context.performed)
+        {
+            rb.AddForce(Vector2.up * jumpForce);
+            canDoubleJump = true;
+        }
+        if (context.action.triggered && !IsGrounded() && canDoubleJump)
+        {
+            rb.AddForce(Vector2.up * jumpForce);
+            canDoubleJump = false;
+        }
+        if (IsOnWall() && context.performed)
+        {
+            //Jump from right wall to left wall or vice versa
+            Debug.Log("Make the jump key do something");
+        }
+    }
+
+    private void WallGrab(InputAction.CallbackContext context)
+    {
+        if (IsOnWall() && context.performed)
+        {
+            canMoveX = false;
+            canMoveY = true;
+            wallGrab = true;
 
             rb.gravityScale = 0;
             rb.velocity = Vector2.zero;
-            //if (jumpAction.IsPressed() && wallJumpCooldown > 0.2f)
-            //{
-            //    rb.AddForce(Vector2.up * jumpForce);
-            //}
-            //else
-            //    wallJumpCooldown += Time.deltaTime;
 
-            if (context.canceled)
-            {
-                canMove = true;
-                Debug.Log("Shift key has been released");
-                rb.gravityScale = 1;
-                //rb.velocity += Vector2.up * Physics2D.gravity.y * (fallRate - 1) * Time.deltaTime;
-            }
         }
-
+        if (context.canceled)
+        {
+            canMoveX = true;
+            canMoveY = false;
+            wallGrab = false;
+            rb.gravityScale = 1;
+        }
     }
 
     private void CalcAccelerationAndDeceleration()
     {
+        //Debug.Log(moveAction.IsPressed());
         rb.velocity = Vector2.ClampMagnitude(rb.velocity, maxSpeed);
         //if (moveAction.WasReleasedThisFrame())
         //{
@@ -137,13 +156,29 @@ public class PlayerMovement : MonoBehaviour
         //    turning = false;
         //}
 
-        float force = movementInput.x * maxSpeed * accelerationSpeed * Time.deltaTime;
-        if (Mathf.Abs(movementInput.x) < 0.1f)// && !turning)
+        float force = movementInputX.x * maxSpeed * accelerationSpeed * Time.deltaTime;
+        if (Mathf.Abs(movementInputX.x) < 0.1f)// && !turning)
         {
             force = -rb.velocity.x * decelerationSpeed;
         }
         rb.AddForce(new Vector2(force, 0));
         //rb.AddForce(movementInput * maxSpeed * Time.deltaTime);
+
+        if (wallGrab && wallClimbAction.IsPressed() && IsOnWall())
+        {
+            if (moveAction.IsPressed())
+            {
+                rb.velocity = new Vector2(0, movementInputY.y);
+                rb.velocity = Vector2.ClampMagnitude(rb.velocity, climbSpeed);
+                float forceUp = movementInputY.y * climbSpeed * Time.deltaTime;
+                rb.AddForce(new Vector2(0, forceUp));
+            }
+            if (!moveAction.IsPressed())
+            {
+                rb.gravityScale = 0;
+                rb.velocity = Vector2.zero;
+            }
+        }
     }
 
     private void Flip()
@@ -155,7 +190,7 @@ public class PlayerMovement : MonoBehaviour
         isFacingRight = !isFacingRight;
     }
 
-    bool IsWallClimbing()
+    bool IsOnWall()
     {
         isPlayerOnWall = Physics2D.Raycast(transform.position, new Vector2(transform.localScale.x, 0), rayDistance, wallLayer.value);
         return isPlayerOnWall;
