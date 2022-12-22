@@ -25,6 +25,7 @@ public class PlayerMovement : MonoBehaviour
     Vector2 movementInput;
     Rigidbody2D rb;
     bool turning;
+    bool canMove = true;
     bool isFacingRight = true;
 
     PlayerInput playerInput;
@@ -68,7 +69,11 @@ public class PlayerMovement : MonoBehaviour
 
     public void OnMove(InputAction.CallbackContext context)
     {
-        movementInput = context.ReadValue<Vector2>();
+        if (canMove)
+        {
+            movementInput = context.ReadValue<Vector2>();
+        }
+
     }
 
     public void OnJump(InputAction.CallbackContext context)
@@ -84,41 +89,40 @@ public class PlayerMovement : MonoBehaviour
             canDoubleJump = false;
         }
 
-        if (!IsGrounded() && IsWallClimbing() && context.performed && wallAction.IsPressed())
-        {
-            wallJumpCooldown = 0;
-            rb.AddForce(Vector2.up * jumpForce);
+        //if (!IsGrounded() && IsWallClimbing() && context.performed && wallAction.IsPressed())
+        //{
+        //    wallJumpCooldown = 0;
+        //    rb.AddForce(Vector2.up * jumpForce);
 
-        }
+        //}
     }
 
     public void WallClimb(InputAction.CallbackContext context)
     {
-        if (wallJumpCooldown > 0.2f)
+        if (context.performed && IsWallClimbing())
         {
-            if ((IsWallClimbing() && IsGrounded()) || (IsWallClimbing() && !IsGrounded()))
+            canMove = false;
+
+            Debug.Log("Shift key is being held can wall climb/jump");
+
+            rb.gravityScale = 0;
+            rb.velocity = Vector2.zero;
+            //if (jumpAction.IsPressed() && wallJumpCooldown > 0.2f)
+            //{
+            //    rb.AddForce(Vector2.up * jumpForce);
+            //}
+            //else
+            //    wallJumpCooldown += Time.deltaTime;
+
+            if (context.canceled)
             {
-                if (context.performed)
-                {
-                    rb.gravityScale = 0;
-                    rb.velocity = Vector2.zero;
-                }
-                else
-                {
-                    rb.gravityScale = 1;
-                    rb.velocity += Vector2.up * Physics2D.gravity.y * (fallRate - 1) * Time.deltaTime;
-                }
+                canMove = true;
+                Debug.Log("Shift key has been released");
+                rb.gravityScale = 1;
+                //rb.velocity += Vector2.up * Physics2D.gravity.y * (fallRate - 1) * Time.deltaTime;
             }
         }
-        else
-        {
-            wallJumpCooldown += Time.deltaTime;
-        }
 
-        if (context.canceled)
-        {
-            Debug.Log("Wall climb key released");
-        }
     }
 
     private void CalcAccelerationAndDeceleration()
@@ -174,3 +178,29 @@ public class PlayerMovement : MonoBehaviour
         Gizmos.DrawRay(transform.position, wallCheck);
     }
 }
+
+//if (context.performed)
+//{
+//    if (wallJumpCooldown > 0.2f)
+//    {
+//        if ((IsWallClimbing() && IsGrounded()) || (IsWallClimbing() && !IsGrounded()))
+//        {
+//            rb.gravityScale = 0;
+//            rb.velocity = Vector2.zero;
+//        }
+//    }
+//    else
+//        wallJumpCooldown += Time.deltaTime;
+//}
+//else
+//{
+//    rb.gravityScale = 1;
+//    rb.velocity += Vector2.up * Physics2D.gravity.y * (fallRate - 1) * Time.deltaTime;
+//}
+//if (wallJumpCooldown > 0.2f)
+//{
+//}
+//else
+//{
+//    //wallJumpCooldown += Time.deltaTime;
+//}
