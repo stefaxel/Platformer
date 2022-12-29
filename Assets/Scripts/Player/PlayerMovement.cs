@@ -31,6 +31,7 @@ public class PlayerMovement : MonoBehaviour
     private bool canMoveY = false;
     private bool wallGrab = false;
     bool isFacingRight = true;
+    bool wallJump = false;
 
     PlayerInput playerInput;
     InputAction jumpAction;
@@ -54,11 +55,11 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
-        if (rb.velocity.y < 0)
+        if (rb.velocity.y < 0 && !wallJump)
         {
             rb.velocity += Vector2.up * Physics2D.gravity.y * (fallRate - 1) * Time.deltaTime;
         }
-        else if (rb.velocity.y > 0 && !jumpAction.IsPressed())
+        else if (rb.velocity.y > 0 && !jumpAction.IsPressed() && !wallJump)
         {
             rb.velocity += Vector2.up * Physics2D.gravity.y * (lowJumpRate - 1) * Time.deltaTime;
         }
@@ -105,21 +106,35 @@ public class PlayerMovement : MonoBehaviour
 
     private void Jump(InputAction.CallbackContext context)
     {
-        if (IsGrounded() && context.performed)
+        if (IsGrounded() && context.performed && !wallJump)
         {
             rb.AddForce(Vector2.up * jumpForce);
             canDoubleJump = true;
         }
-        if (context.action.triggered && !IsGrounded() && canDoubleJump)
+        if (context.action.triggered && !IsGrounded() && canDoubleJump && !wallJump)
         {
             rb.AddForce(Vector2.up * jumpForce);
             canDoubleJump = false;
         }
-        if (IsOnWall() && context.performed)
+        if (IsOnWall() && context.action.triggered)
         {
+            wallJump = true;
+            if (isFacingRight)
+            {
+                rb.velocity = new Vector2(500f * -1 * Time.deltaTime, jumpForce * Time.deltaTime);
+                Flip();
+            }
+            if (!isFacingRight)
+            {
+                rb.velocity = new Vector2(500f * -1 * Time.deltaTime, jumpForce * Time.deltaTime);
+                Flip();
+            }
             //Jump from right wall to left wall or vice versa
+            Debug.Log("Jump key is being pressed: " + context.action.triggered);
             Debug.Log("Make the jump key do something");
         }
+        if (!IsOnWall())
+            wallJump = false;
     }
 
     private void WallGrab(InputAction.CallbackContext context)
@@ -145,17 +160,8 @@ public class PlayerMovement : MonoBehaviour
 
     private void CalcAccelerationAndDeceleration()
     {
-        //Debug.Log(moveAction.IsPressed());
         rb.velocity = Vector2.ClampMagnitude(rb.velocity, maxSpeed);
-        //if (moveAction.WasReleasedThisFrame())
-        //{
-        //    turning = true;
-        //}
-        //else
-        //{
-        //    turning = false;
-        //}
-
+        
         float force = movementInputX.x * maxSpeed * accelerationSpeed * Time.deltaTime;
         if (Mathf.Abs(movementInputX.x) < 0.1f)// && !turning)
         {
