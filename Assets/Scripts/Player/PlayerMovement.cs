@@ -30,7 +30,7 @@ public class PlayerMovement : MonoBehaviour
     bool canMoveX = true;
     private bool canMoveY = false;
     private bool wallGrab = false;
-    bool isFacingRight = true;
+    public bool isFacingRight;
     bool wallJump = false;
 
     PlayerInput playerInput;
@@ -42,6 +42,7 @@ public class PlayerMovement : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         playerInput = GetComponent<PlayerInput>();
+        isFacingRight = true;
 
         jumpAction = playerInput.actions["Jump"];
         wallClimbAction = playerInput.actions["WallClimb"];
@@ -122,12 +123,12 @@ public class PlayerMovement : MonoBehaviour
             if (isFacingRight)
             {
                 rb.velocity = new Vector2(500f * -1 * Time.deltaTime, jumpForce * Time.deltaTime);
-                Flip();
+                WallFlip();
             }
             if (!isFacingRight)
             {
                 rb.velocity = new Vector2(500f * -1 * Time.deltaTime, jumpForce * Time.deltaTime);
-                Flip();
+                WallFlip();
             }
             //Jump from right wall to left wall or vice versa
             Debug.Log("Jump key is being pressed: " + context.action.triggered);
@@ -161,7 +162,7 @@ public class PlayerMovement : MonoBehaviour
     private void CalcAccelerationAndDeceleration()
     {
         rb.velocity = Vector2.ClampMagnitude(rb.velocity, maxSpeed);
-        
+
         float force = movementInputX.x * maxSpeed * accelerationSpeed * Time.deltaTime;
         if (Mathf.Abs(movementInputX.x) < 0.1f)// && !turning)
         {
@@ -190,6 +191,18 @@ public class PlayerMovement : MonoBehaviour
     private void Flip()
     {
         Vector3 currentScale = gameObject.transform.localScale;
+
+        currentScale.x *= -1;
+        gameObject.transform.localScale = currentScale;
+
+        isFacingRight = !isFacingRight;
+
+    }
+
+    private void WallFlip()
+    {
+        Vector3 currentScale = gameObject.transform.localScale;
+
         currentScale.x *= -1;
         gameObject.transform.localScale = currentScale;
 
