@@ -10,6 +10,9 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField, Range(100f, 500f)] float maxSpeed = 200f;
     [SerializeField, Range(100f, 500f)] float climbSpeed = 100f;
     [SerializeField, Range(100f, 500f)] float jumpForce = 325f;
+    [SerializeField, Range(100f, 800f)] float wallJumpSpeed = 500f;
+    [SerializeField, Range(100f, 800f)] float wallJumpForce = 450f;
+    int wallJumpDirection = 1;
     private bool canDoubleJump;
     private RaycastHit2D isPlayerOnGround;
     private RaycastHit2D isPlayerOnWall;
@@ -120,19 +123,21 @@ public class PlayerMovement : MonoBehaviour
         if (IsOnWall() && context.action.triggered)
         {
             wallJump = true;
-            if (isFacingRight)
+
+            if (wallJump && IsOnWall() && isFacingRight && context.action.triggered)
             {
-                rb.velocity = new Vector2(500f * -1 * Time.deltaTime, jumpForce * Time.deltaTime);
-                WallFlip();
+                //Vector2 jumpDirection = new Vector2(600f * -1 * Time.deltaTime, 800f * Time.deltaTime);
+                //rb.AddForce(Vector2.up * jumpDirection);
+                rb.velocity = new Vector2(wallJumpSpeed * -wallJumpDirection * Time.deltaTime, wallJumpForce * Time.deltaTime);
+                Flip();  
             }
-            if (!isFacingRight)
+            if (wallJump && IsOnWall() && !isFacingRight && context.action.triggered)
             {
-                rb.velocity = new Vector2(500f * -1 * Time.deltaTime, jumpForce * Time.deltaTime);
-                WallFlip();
+                //Vector2 jumpDirection = new Vector2(600f * 1 * Time.deltaTime, 800f * Time.deltaTime);
+                //rb.AddForce(Vector2.up * jumpDirection);
+                rb.velocity = new Vector2(wallJumpSpeed * wallJumpDirection * Time.deltaTime, wallJumpForce * Time.deltaTime);
+                Flip();
             }
-            //Jump from right wall to left wall or vice versa
-            Debug.Log("Jump key is being pressed: " + context.action.triggered);
-            Debug.Log("Make the jump key do something");
         }
         if (!IsOnWall())
             wallJump = false;
@@ -197,16 +202,6 @@ public class PlayerMovement : MonoBehaviour
 
         isFacingRight = !isFacingRight;
 
-    }
-
-    private void WallFlip()
-    {
-        Vector3 currentScale = gameObject.transform.localScale;
-
-        currentScale.x *= -1;
-        gameObject.transform.localScale = currentScale;
-
-        isFacingRight = !isFacingRight;
     }
 
     bool IsOnWall()

@@ -1447,6 +1447,8 @@ MonoBehaviour:
   maxSpeed: 200
   climbSpeed: 100
   jumpForce: 325
+  wallJumpSpeed: 500
+  wallJumpForce: 450
   accelerationSpeed: 2.5
   decelerationSpeed: 3
   fallRate: 4.5
@@ -1459,6 +1461,7 @@ MonoBehaviour:
   wallLayer:
     serializedVersion: 2
     m_Bits: 64
+  isFacingRight: 0
 --- !u!114 &1701177798
 MonoBehaviour:
   m_ObjectHideFlags: 0
