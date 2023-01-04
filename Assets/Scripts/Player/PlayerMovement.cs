@@ -10,8 +10,8 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField, Range(100f, 500f)] float maxSpeed = 200f;
     [SerializeField, Range(100f, 500f)] float climbSpeed = 100f;
     [SerializeField, Range(100f, 500f)] float jumpForce = 325f;
-    [SerializeField, Range(100f, 800f)] float wallJumpSpeed = 500f;
-    [SerializeField, Range(100f, 800f)] float wallJumpForce = 450f;
+    [SerializeField, Range(0f, 10f)] float wallJumpSpeed = 6.5f;
+    [SerializeField, Range(0f, 10f)] float wallJumpForce = 5.5f;
     int wallJumpDirection = 1;
     private bool canDoubleJump;
     private RaycastHit2D isPlayerOnGround;
@@ -23,7 +23,6 @@ public class PlayerMovement : MonoBehaviour
 
     [Header("Player Conditions")]
     [SerializeField] float rayDistance;
-    [SerializeField] float wallJumpCooldown;
     [SerializeField] LayerMask groundLayer;
     [SerializeField] LayerMask wallLayer;
     Vector2 movementInputX;
@@ -126,16 +125,16 @@ public class PlayerMovement : MonoBehaviour
 
             if (wallJump && IsOnWall() && isFacingRight && context.action.triggered)
             {
-                //Vector2 jumpDirection = new Vector2(600f * -1 * Time.deltaTime, 800f * Time.deltaTime);
-                //rb.AddForce(Vector2.up * jumpDirection);
-                rb.velocity = new Vector2(wallJumpSpeed * -wallJumpDirection * Time.deltaTime, wallJumpForce * Time.deltaTime);
-                Flip();  
+                Vector2 jumpDirection = new Vector2(wallJumpSpeed * -wallJumpDirection , wallJumpForce);
+                rb.AddForce(jumpDirection, ForceMode2D.Impulse);
+                
+                Flip();
             }
             if (wallJump && IsOnWall() && !isFacingRight && context.action.triggered)
             {
-                //Vector2 jumpDirection = new Vector2(600f * 1 * Time.deltaTime, 800f * Time.deltaTime);
-                //rb.AddForce(Vector2.up * jumpDirection);
-                rb.velocity = new Vector2(wallJumpSpeed * wallJumpDirection * Time.deltaTime, wallJumpForce * Time.deltaTime);
+                Vector2 jumpDirection = new Vector2(wallJumpSpeed * wallJumpDirection, wallJumpForce);
+                rb.AddForce(jumpDirection, ForceMode2D.Impulse);
+                
                 Flip();
             }
         }
