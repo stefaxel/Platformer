@@ -12,7 +12,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField, Range(100f, 500f)] float jumpForce = 325f;
     [SerializeField, Range(0f, 10f)] float wallJumpSpeed = 6.5f;
     [SerializeField, Range(0f, 10f)] float wallJumpForce = 5.5f;
-    int wallJumpDirection = 1;
+    private int wallJumpDirection = 1;
     private bool canDoubleJump;
     private RaycastHit2D isPlayerOnGround;
     private RaycastHit2D isPlayerOnWall;
@@ -20,6 +20,8 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField, Range(0f, 10f)] float decelerationSpeed = 3f;
     [SerializeField, Range(0f, 5f)] float fallRate = 4.5f;
     [SerializeField, Range(0f, 5f)] float lowJumpRate = 2.5f;
+    [SerializeField] float coyoteTime = 0.2f;
+    float coyoteTimeCounter;
 
     [Header("Player Conditions")]
     [SerializeField] float rayDistance;
@@ -58,6 +60,14 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
+        if (IsGrounded() || IsOnWall())
+        {
+            coyoteTimeCounter = coyoteTime;
+        }
+        else
+        {
+            coyoteTimeCounter -= Time.deltaTime;
+        }
         if (rb.velocity.y < 0 && !wallJump)
         {
             rb.velocity += Vector2.up * Physics2D.gravity.y * (fallRate - 1) * Time.deltaTime;
@@ -109,7 +119,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void Jump(InputAction.CallbackContext context)
     {
-        if (IsGrounded() && context.performed && !wallJump)
+        if (coyoteTimeCounter > 0f && context.performed && !wallJump)
         {
             rb.AddForce(Vector2.up * jumpForce);
             canDoubleJump = true;
@@ -123,14 +133,14 @@ public class PlayerMovement : MonoBehaviour
         {
             wallJump = true;
 
-            if (wallJump && IsOnWall() && isFacingRight && context.action.triggered)
+            if (wallJump && IsOnWall() && isFacingRight && context.action.triggered && !wallGrab)
             {
                 Vector2 jumpDirection = new Vector2(wallJumpSpeed * -wallJumpDirection , wallJumpForce);
                 rb.AddForce(jumpDirection, ForceMode2D.Impulse);
                 
                 Flip();
             }
-            if (wallJump && IsOnWall() && !isFacingRight && context.action.triggered)
+            if (wallJump && IsOnWall() && !isFacingRight && context.action.triggered && !wallGrab)
             {
                 Vector2 jumpDirection = new Vector2(wallJumpSpeed * wallJumpDirection, wallJumpForce);
                 rb.AddForce(jumpDirection, ForceMode2D.Impulse);
@@ -140,6 +150,10 @@ public class PlayerMovement : MonoBehaviour
         }
         if (!IsOnWall())
             wallJump = false;
+        if(context.canceled)
+        {
+            coyoteTimeCounter = 0f;
+        }
     }
 
     private void WallGrab(InputAction.CallbackContext context)
@@ -159,6 +173,7 @@ public class PlayerMovement : MonoBehaviour
             canMoveX = true;
             canMoveY = false;
             wallGrab = false;
+            
             rb.gravityScale = 1;
         }
     }
@@ -188,6 +203,10 @@ public class PlayerMovement : MonoBehaviour
             {
                 rb.gravityScale = 0;
                 rb.velocity = Vector2.zero;
+            }
+            if (jumpAction.IsPressed() && coyoteTimeCounter > 0f)
+            {
+                rb.AddForce(Vector2.up * wallJumpForce, ForceMode2D.Impulse);
             }
         }
     }
