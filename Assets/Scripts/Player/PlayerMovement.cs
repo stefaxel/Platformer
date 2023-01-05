@@ -84,7 +84,7 @@ public class PlayerMovement : MonoBehaviour
         {
             Flip();
         }
-
+        
     }
 
     public void OnMove(InputAction.CallbackContext context)
