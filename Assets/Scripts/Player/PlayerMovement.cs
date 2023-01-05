@@ -129,7 +129,7 @@ public class PlayerMovement : MonoBehaviour
             rb.AddForce(Vector2.up * jumpForce);
             canDoubleJump = false;
         }
-        if (IsOnWall() && context.action.triggered)
+        if (IsOnWall() && context.action.triggered && !wallClimbAction.IsPressed())
         {
             wallJump = true;
 
@@ -206,7 +206,7 @@ public class PlayerMovement : MonoBehaviour
             }
             if (jumpAction.IsPressed() && coyoteTimeCounter > 0f)
             {
-                rb.AddForce(Vector2.up * wallJumpForce, ForceMode2D.Impulse);
+                rb.AddForce(Vector2.up * jumpForce);
             }
         }
     }
