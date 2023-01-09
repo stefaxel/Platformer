@@ -33,7 +33,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: -1
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &4819571369340003285
 SpriteRenderer:
@@ -144,8 +144,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04081a531bd120f4fb4b931f458754f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  waitForSecondsDown: 2
-  waitForSecondsUp: 2
+  waitForSecondsDown: 0.5
+  waitForSecondsUp: 1
+  speedUp: 10
+  speed: 2
+  platformMovingBack: 0
 --- !u!50 &4819571369340003286
 Rigidbody2D:
   serializedVersion: 4

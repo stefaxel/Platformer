@@ -5,23 +5,28 @@ using UnityEngine;
 
 public class GetWaypoints : MonoBehaviour
 {
-    [SerializeField] GameObject[] waypoint;
-    int currentWaypointIndex = 0;
+    [SerializeField] protected GameObject[] waypoint;
+    protected int currentWaypointIndex = 0;
 
-    [SerializeField] float speed;
+    [SerializeField] protected float speed;
 
     
-    void Update()
+    private void Update()
+    {
+        GetWaypoint();
+    }
+
+    protected virtual void GetWaypoint()
     {
         if (Vector2.Distance(waypoint[currentWaypointIndex].transform.position, transform.position) < 0.1f)
         {
             currentWaypointIndex++;
-            if(currentWaypointIndex >= waypoint.Length)
+            if (currentWaypointIndex >= waypoint.Length)
             {
                 currentWaypointIndex = 0;
             }
         }
-        transform.position = Vector2.MoveTowards(transform.position, 
+        transform.position = Vector2.MoveTowards(transform.position,
             waypoint[currentWaypointIndex].transform.position, speed * Time.deltaTime);
     }
 }

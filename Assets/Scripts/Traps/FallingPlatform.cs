@@ -1,16 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using UnityEngine;
 
 public class FallingPlatform : MonoBehaviour
 {
     [SerializeField] float waitForSecondsDown;
     [SerializeField] float waitForSecondsUp;
-    [SerializeField] float speedUp;
-    Rigidbody2D rb;
+    [SerializeField] float speed;
+
+    Vector2 initialPos;
     BoxCollider2D boxCollider;
-    private Vector2 initialPos;
-    private Vector2 currentPosition;
+    Rigidbody2D rb;
+
+    bool platformMovingBack;
 
     void Awake()
     {
@@ -21,20 +24,20 @@ public class FallingPlatform : MonoBehaviour
     private void Start()
     {
         initialPos = transform.position;
-        if (currentPosition == initialPos)
-        {
-            rb.velocity = Vector2.zero;
-        }
     }
 
     private void Update()
     {
-        currentPosition = transform.position;
+        if (platformMovingBack)
+            transform.position = Vector2.MoveTowards(transform.position, initialPos, speed * Time.deltaTime);
+
+        if (transform.position.y == initialPos.y)
+            platformMovingBack = false;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if(collision.gameObject.name == "Player")
+        if(collision.gameObject.name == "Player" && !platformMovingBack)
         {
             StartCoroutine(WaitForPlatformFall(waitForSecondsDown));
         }
@@ -43,7 +46,7 @@ public class FallingPlatform : MonoBehaviour
     private IEnumerator WaitForPlatformFall(float time)
     {
         yield return new WaitForSeconds(time);
-    
+
         boxCollider.isTrigger = true;
         rb.isKinematic = false;
         StartCoroutine(WaitForPlatformUp(waitForSecondsUp));
@@ -53,16 +56,16 @@ public class FallingPlatform : MonoBehaviour
     {
         yield return new WaitForSeconds(time);
 
+        rb.velocity = Vector2.zero;
         rb.isKinematic = true;
         boxCollider.isTrigger = false;
+        platformMovingBack = true;
 
-        if(currentPosition != initialPos)
-        {
-            rb.velocity = Vector2.up * speedUp;
-            
-        }
-        
-        //transform.position = initialPos;
+        //platformMovingBack = false;
+        //rb.isKinematic = true;
         //rb.velocity = Vector2.zero;
+        //boxCollider.isTrigger = false;
+        //yield return new WaitForSeconds(time);
+
     }
 }
