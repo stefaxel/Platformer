@@ -61,11 +61,5 @@ public class FallingPlatform : MonoBehaviour
         boxCollider.isTrigger = false;
         platformMovingBack = true;
 
-        //platformMovingBack = false;
-        //rb.isKinematic = true;
-        //rb.velocity = Vector2.zero;
-        //boxCollider.isTrigger = false;
-        //yield return new WaitForSeconds(time);
-
     }
 }
