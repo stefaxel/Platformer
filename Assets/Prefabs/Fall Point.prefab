@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7311677127188753424}
   - component: {fileID: 7181530742513286846}
+  - component: {fileID: 544952161083603458}
   m_Layer: 0
   m_Name: Fall Point
   m_TagString: FallDetector
@@ -77,3 +78,16 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 15.176319, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &544952161083603458
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2593736599324228184}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a178a5d0ac27dbd43b0b5f3cb7a7d953, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 1

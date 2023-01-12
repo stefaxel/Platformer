@@ -6,9 +6,9 @@ public class DamageScript : MonoBehaviour
 {
     [SerializeField] int damage;
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.gameObject.name == "Player")
+        if (collision.gameObject.name == "Player")
         {
             collision.gameObject.GetComponent<PlayerHealth>().TakeDamage(damage);
         }
