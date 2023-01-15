@@ -9,35 +9,37 @@ public class FireTrap : MonoBehaviour
     [SerializeField] int damage;
 
     private bool isActive;
+    private bool fireIsActive = false;
     private bool canTakeDamage;
 
     void Start()
     {
-        
+        StartCoroutine(FireTrapTrigger());
     }
 
     // Update is called once per frame
     void Update()
     {
-        StartCoroutine(FireTrapTrigger());
+        if(!fireIsActive)
+            StartCoroutine(FireTrapTrigger());
     }
 
     private IEnumerator FireTrapTrigger()
-    {
-        float startTime = Time.time;
-
+    { 
         if(!isActive)
         {
             canTakeDamage = false;
+            yield return new WaitForSeconds(offTime);
+            fireIsActive = true;
             isActive = true;
-            yield return new WaitForSeconds(onTime);
         }
 
         if(isActive)
         {
             canTakeDamage = true;
-            yield return new WaitForSeconds(offTime);
+            yield return new WaitForSeconds(onTime);
             isActive = false;
+            fireIsActive = false;
         }
     }
 

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class FanTrap : MonoBehaviour
@@ -7,14 +8,29 @@ public class FanTrap : MonoBehaviour
     [SerializeField] float onTime;
     [SerializeField] float offTime;
     [SerializeField] float forceApplied;
+    [SerializeField] bool up;
+    [SerializeField] bool down;
+    [SerializeField] bool left;
+    [SerializeField] bool right;
 
-    private bool isActive;
+    bool fanIsActive = true;
+
+    float rotation;
+    
+    private bool isActive = true;
     private bool canBeBlown;
 
-    // Update is called once per frame
-    void Update()
+    private void Start()
     {
         StartCoroutine(FanTrapTrigger());
+        rotation = gameObject.transform.localRotation.z;
+    }
+
+    private void Update()
+    {
+        if(!fanIsActive)
+            StartCoroutine(FanTrapTrigger());
+        
     }
 
     IEnumerator FanTrapTrigger()
@@ -22,25 +38,47 @@ public class FanTrap : MonoBehaviour
         if (!isActive)
         {
             canBeBlown = false;
+            yield return new WaitForSeconds(offTime);
+            fanIsActive = true;
             isActive = true;
-            yield return new WaitForSeconds(onTime);
         }
 
         if (isActive)
         {
             canBeBlown = true;
-            yield return new WaitForSeconds(offTime);
+            yield return new WaitForSeconds(onTime);
             isActive = false;
+            fanIsActive = false;
         }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        Vector3 applyForceDir = new Vector3(0, 0, rotation);
         if (collision.gameObject.name == "Player")
         {
-            if (isActive && canBeBlown)
+            if (isActive && canBeBlown && up)
             {
+                Debug.Log(applyForceDir);
                 collision.GetComponent<Rigidbody2D>().AddForce(Vector2.up * forceApplied, ForceMode2D.Impulse);
+            }
+
+            if (isActive && canBeBlown && down)
+            {
+                Debug.Log(applyForceDir);
+                collision.GetComponent<Rigidbody2D>().AddForce(Vector2.down * forceApplied, ForceMode2D.Impulse);
+            }
+
+            if (isActive && canBeBlown && left)
+            {
+                Debug.Log(applyForceDir);
+                collision.GetComponent<Rigidbody2D>().AddForce(Vector2.left * forceApplied, ForceMode2D.Impulse);
+            }
+
+            if (isActive && canBeBlown && right)
+            {
+                Debug.Log(applyForceDir);
+                collision.GetComponent<Rigidbody2D>().AddForce(Vector2.right * forceApplied, ForceMode2D.Impulse);
             }
         }
     }
