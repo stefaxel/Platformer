@@ -8,36 +8,57 @@ public class FanTrap : MonoBehaviour
     [SerializeField] float onTime;
     [SerializeField] float offTime;
     [SerializeField] float forceApplied;
-    [SerializeField] bool up;
+    [SerializeField] bool vertical;
+    [SerializeField] bool horizontal;
+
     [SerializeField] bool down;
     [SerializeField] bool left;
     [SerializeField] bool right;
+    [SerializeField] bool up;
+    [SerializeField] bool angle;
+
+    int forceDirection;
+    Vector3 applyForceUp;
+    Vector3 applyForceAcross;
+    Vector3 applyForceUpAcross;
 
     bool fanIsActive = true;
 
     float rotation;
     
     private bool isActive = true;
-    private bool canBeBlown;
+    private bool fanCanBlowPlayer;
 
     private void Start()
     {
         StartCoroutine(FanTrapTrigger());
         rotation = gameObject.transform.localRotation.z;
+
+        if (down)
+            forceDirection = -1;
+        if (left)
+            forceDirection = -1;
+        if (right)
+            forceDirection = 1;
+        if (up)
+            forceDirection = 1;
+
+        applyForceUp = new Vector3(0, forceDirection, rotation);
+        applyForceAcross = new Vector3(forceDirection, 0, rotation);
+        applyForceUpAcross = new Vector3(forceDirection, forceDirection, rotation);
     }
 
     private void Update()
     {
         if(!fanIsActive)
             StartCoroutine(FanTrapTrigger());
-        
     }
 
     IEnumerator FanTrapTrigger()
     {
         if (!isActive)
         {
-            canBeBlown = false;
+            fanCanBlowPlayer = false;
             yield return new WaitForSeconds(offTime);
             fanIsActive = true;
             isActive = true;
@@ -45,7 +66,7 @@ public class FanTrap : MonoBehaviour
 
         if (isActive)
         {
-            canBeBlown = true;
+            fanCanBlowPlayer = true;
             yield return new WaitForSeconds(onTime);
             isActive = false;
             fanIsActive = false;
@@ -54,31 +75,21 @@ public class FanTrap : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Vector3 applyForceDir = new Vector3(0, 0, rotation);
         if (collision.gameObject.name == "Player")
         {
-            if (isActive && canBeBlown && up)
+            if (isActive && fanCanBlowPlayer && vertical)
             {
-                Debug.Log(applyForceDir);
-                collision.GetComponent<Rigidbody2D>().AddForce(Vector2.up * forceApplied, ForceMode2D.Impulse);
+                collision.GetComponent<Rigidbody2D>().AddRelativeForce(applyForceUp * forceApplied, ForceMode2D.Impulse);
             }
 
-            if (isActive && canBeBlown && down)
+            if (isActive && fanCanBlowPlayer && horizontal)
             {
-                Debug.Log(applyForceDir);
-                collision.GetComponent<Rigidbody2D>().AddForce(Vector2.down * forceApplied, ForceMode2D.Impulse);
+                collision.GetComponent<Rigidbody2D>().AddRelativeForce(applyForceAcross * forceApplied, ForceMode2D.Impulse);
             }
 
-            if (isActive && canBeBlown && left)
+            if (isActive && fanCanBlowPlayer && angle)
             {
-                Debug.Log(applyForceDir);
-                collision.GetComponent<Rigidbody2D>().AddForce(Vector2.left * forceApplied, ForceMode2D.Impulse);
-            }
-
-            if (isActive && canBeBlown && right)
-            {
-                Debug.Log(applyForceDir);
-                collision.GetComponent<Rigidbody2D>().AddForce(Vector2.right * forceApplied, ForceMode2D.Impulse);
+                collision.GetComponent<Rigidbody2D>().AddRelativeForce(applyForceUpAcross * forceApplied, ForceMode2D.Impulse);
             }
         }
     }
