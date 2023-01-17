@@ -6,6 +6,7 @@ using UnityEngine;
 public class PlayerPosition : MonoBehaviour
 {
     Vector2 checkpointPosition;
+    [HideInInspector] public Vector2 respawnPlayer;
     
     // Start is called before the first frame update
     void Start()
@@ -13,15 +14,10 @@ public class PlayerPosition : MonoBehaviour
         checkpointPosition = transform.position;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     public void UpdateCheckpoint(Vector2 position)
     {
         checkpointPosition = position;
+        respawnPlayer = checkpointPosition;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
