@@ -6,7 +6,7 @@ using TMPro;
 public class PlayerHealth : MonoBehaviour
 {
     [SerializeField] public int health;
-    private int currentHealth;
+    [HideInInspector] public int currentHealth { get; private set; }
 
     [SerializeField] GameObject gameOverScreen;
     bool restartPressed = false;
@@ -27,6 +27,7 @@ public class PlayerHealth : MonoBehaviour
         {
             gameOverScreen.SetActive(true);
             Time.timeScale = 0;
+            Debug.Log("Do something");
         }
     }
 

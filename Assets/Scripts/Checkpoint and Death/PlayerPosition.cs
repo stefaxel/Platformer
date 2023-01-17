@@ -7,7 +7,7 @@ public class PlayerPosition : MonoBehaviour
 {
     Vector2 checkpointPosition;
     [HideInInspector] public Vector2 respawnPlayer;
-    
+
     // Start is called before the first frame update
     void Start()
     {
