@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Checkpoint
   - FallDetector
+  - UI
   layers:
   - Default
   - TransparentFX

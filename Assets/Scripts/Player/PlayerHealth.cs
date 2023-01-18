@@ -9,6 +9,7 @@ public class PlayerHealth : MonoBehaviour
     [SerializeField] public int currentHealth { get; private set; }
 
     [SerializeField] GameObject gameOverScreen;
+    [SerializeField] GameObject cherryCounter;
     bool restartPressed = false;
 
     [SerializeField] private Healthbar healthbar;
@@ -29,6 +30,7 @@ public class PlayerHealth : MonoBehaviour
 
         if (currentHealth <= 0)
         {
+            cherryCounter.SetActive(false);
             gameOverScreen.SetActive(true);
             Time.timeScale = 0;
         }
@@ -48,6 +50,7 @@ public class PlayerHealth : MonoBehaviour
             Time.timeScale = 1;
             transform.position = playerPosition.respawnPlayer;
             gameOverScreen.SetActive(false);
+            cherryCounter.SetActive(true);
             restartPressed = false;
         }
     }
