@@ -6,7 +6,7 @@ using UnityEngine;
 public class PlayerPosition : MonoBehaviour
 {
     Vector2 checkpointPosition;
-    [HideInInspector] public Vector2 respawnPlayer;
+    [HideInInspector] public Vector2 respawnPlayer { get; private set; }
 
     // Start is called before the first frame update
     void Start()

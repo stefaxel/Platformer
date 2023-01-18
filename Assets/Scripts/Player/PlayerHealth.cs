@@ -5,25 +5,29 @@ using TMPro;
 
 public class PlayerHealth : MonoBehaviour
 {
-    [SerializeField] public int health;
-    [HideInInspector] public int currentHealth { get; private set; }
+    [SerializeField] private int maxHealth;
+    [SerializeField] public int currentHealth { get; private set; }
 
     [SerializeField] GameObject gameOverScreen;
     bool restartPressed = false;
+
+    [SerializeField] private Healthbar healthbar;
 
     PlayerPosition playerPosition;
 
     private void Start()
     {
         playerPosition = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerPosition>();
-        currentHealth = health;
+        currentHealth = maxHealth;
+        healthbar.SetMaxHealth(maxHealth); 
     }
 
     public void TakeDamage(int damage)
     {
-        health -= damage;
+        currentHealth -= damage;
+        healthbar.SetHealth(currentHealth);
 
-        if (health <= 0)
+        if (currentHealth <= 0)
         {
             gameOverScreen.SetActive(true);
             Time.timeScale = 0;
@@ -41,7 +45,7 @@ public class PlayerHealth : MonoBehaviour
     {
         if (restartPressed)
         {
-            health = currentHealth;
+            currentHealth = maxHealth;
             Time.timeScale = 1;
             transform.position = playerPosition.respawnPlayer;
             gameOverScreen.SetActive(false);
