@@ -14,7 +14,7 @@ public class PlayerHealth : MonoBehaviour
     [SerializeField] private Healthbar healthbar;
 
     PlayerPosition playerPosition;
-
+    
     private void Start()
     {
         playerPosition = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerPosition>();
@@ -31,7 +31,6 @@ public class PlayerHealth : MonoBehaviour
         {
             gameOverScreen.SetActive(true);
             Time.timeScale = 0;
-            Debug.Log("Do something");
         }
     }
 
@@ -51,6 +50,12 @@ public class PlayerHealth : MonoBehaviour
             gameOverScreen.SetActive(false);
             restartPressed = false;
         }
+    }
+
+    public void AddHealth(int health)
+    {
+        currentHealth = currentHealth + health;
+        healthbar.SetHealth(currentHealth);
     }
 
 }
