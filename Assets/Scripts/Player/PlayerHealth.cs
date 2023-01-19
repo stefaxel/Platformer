@@ -37,6 +37,7 @@ public class PlayerHealth : MonoBehaviour
         {
             ui.RestartGame();
             currentHealth = maxHealth;
+            healthbar.SetHealth(currentHealth);
             transform.position = playerPosition.respawnPlayer;
         }
     }
