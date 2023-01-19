@@ -7312,8 +7312,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1701177799}
-        m_TargetAssemblyTypeName: PlayerHealth, Assembly-CSharp
+      - m_Target: {fileID: 1776918007}
+        m_TargetAssemblyTypeName: UI, Assembly-CSharp
         m_MethodName: OnClick
         m_Mode: 1
         m_Arguments:
@@ -8059,8 +8059,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 5
-  gameOverScreen: {fileID: 1652480882}
-  cherryCounter: {fileID: 1943235327}
   healthbar: {fileID: 1731037875}
 --- !u!114 &1701177800
 MonoBehaviour:
@@ -8271,6 +8269,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cherryText: {fileID: 1943235329}
+  gameOverScreen: {fileID: 1652480882}
+  cherryCounter: {fileID: 1943235327}
 --- !u!1 &1943235327
 GameObject:
   m_ObjectHideFlags: 0

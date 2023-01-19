@@ -8,50 +8,36 @@ public class PlayerHealth : MonoBehaviour
     [SerializeField] private int maxHealth;
     [SerializeField] public int currentHealth { get; private set; }
 
-    [SerializeField] GameObject gameOverScreen;
-    [SerializeField] GameObject cherryCounter;
-    bool restartPressed = false;
-
     [SerializeField] private Healthbar healthbar;
-
     PlayerPosition playerPosition;
+    UI ui;
     
     private void Start()
     {
         playerPosition = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerPosition>();
+        ui = GameObject.FindGameObjectWithTag("UI").GetComponent<UI>();
         currentHealth = maxHealth;
         healthbar.SetMaxHealth(maxHealth); 
+    }
+
+    private void Update()
+    {
+        RespawnPlayer();
     }
 
     public void TakeDamage(int damage)
     {
         currentHealth -= damage;
         healthbar.SetHealth(currentHealth);
-
-        if (currentHealth <= 0)
-        {
-            cherryCounter.SetActive(false);
-            gameOverScreen.SetActive(true);
-            Time.timeScale = 0;
-        }
-    }
-
-    public void OnClick()
-    {
-        restartPressed = true;
-        RespawnPlayer();
     }
 
     private void RespawnPlayer()
     {
-        if (restartPressed)
+        if (ui.restartPressed)
         {
+            ui.RestartGame();
             currentHealth = maxHealth;
-            Time.timeScale = 1;
             transform.position = playerPosition.respawnPlayer;
-            gameOverScreen.SetActive(false);
-            cherryCounter.SetActive(true);
-            restartPressed = false;
         }
     }
 
