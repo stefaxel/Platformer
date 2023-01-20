@@ -7,6 +7,8 @@ TagManager:
   - Checkpoint
   - FallDetector
   - UI
+  - Ground
+  - Wall
   layers:
   - Default
   - TransparentFX

@@ -10,6 +10,7 @@ public class Spikehead : MonoBehaviour
     [SerializeField] private float attackDelay;
     [SerializeField] private LayerMask playerLayer;
     [SerializeField] private int damage;
+    [SerializeField] private float enemyHealth;
     private float attackTimer;
     private Vector3 destination;
 
@@ -32,6 +33,9 @@ public class Spikehead : MonoBehaviour
             if (attackTimer > attackDelay)
                 CheckForPlayer();
         }
+
+        if(enemyHealth <= 0)
+            Destroy(gameObject);
     }
 
     private void CheckForPlayer()
@@ -72,5 +76,10 @@ public class Spikehead : MonoBehaviour
             collision.gameObject.GetComponent<PlayerHealth>().TakeDamage(damage);
             StopAttacking();
         }
+        if(collision.gameObject.name == "Wall" || collision.gameObject.name == "Ground")
+        {
+            enemyHealth--;
+            StopAttacking();
+        }     
     }
 }
