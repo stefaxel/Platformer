@@ -5,25 +5,25 @@ using UnityEngine;
 
 public class Spikehead : MonoBehaviour
 {
-    [SerializeField] private float speed;
-    [SerializeField] private float sightRange;
-    [SerializeField] private float attackDelay;
-    [SerializeField] private LayerMask playerLayer;
-    [SerializeField] private int damage;
-    [SerializeField] private float enemyHealth;
-    private float attackTimer;
-    private Vector3 destination;
+    [SerializeField] protected float speed;
+    [SerializeField] protected float sightRange;
+    [SerializeField] protected float attackDelay;
+    [SerializeField] protected LayerMask playerLayer;
+    [SerializeField] protected int damage;
+    [SerializeField] protected float enemyHealth;
+    protected float attackTimer;
+    protected Vector3 destination;
 
-    private bool isAttacking;
+    protected bool isAttacking;
 
-    private Vector3[] direction = new Vector3[4];
+    protected Vector3[] direction = new Vector3[4];
 
-    private void OnEnable()
+    protected virtual void OnEnable()
     {
         StopAttacking();
     }
 
-    private void Update()
+    protected virtual void Update()
     {
         if (isAttacking)
             transform.Translate(destination * Time.deltaTime * speed);
@@ -38,7 +38,7 @@ public class Spikehead : MonoBehaviour
             Destroy(gameObject);
     }
 
-    private void CheckForPlayer()
+    protected virtual void CheckForPlayer()
     {
         CalculateAttackDirection();
 
@@ -55,21 +55,21 @@ public class Spikehead : MonoBehaviour
         }
     }
 
-    private void CalculateAttackDirection()
+    protected virtual void CalculateAttackDirection()
     {
-        direction[0] = transform.right * sightRange;
-        direction[1] = -transform.right * sightRange;
-        direction[2] = transform.up * sightRange;
-        direction[3] = -transform.up * sightRange;
+        direction[0] = transform.right * sightRange; //right
+        direction[1] = -transform.right * sightRange; //left
+        direction[2] = transform.up * sightRange; //up
+        direction[3] = -transform.up * sightRange; //down
     }
 
-    private void StopAttacking()
+    protected virtual void StopAttacking()
     {
         destination = transform.position;
         isAttacking = false;
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    protected virtual void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.name == "Player")
         {
