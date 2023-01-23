@@ -15,15 +15,17 @@ public class UI : MonoBehaviour
 
     PlayerHealth playerHealth;
 
-    private float timer = 0;
+    private float timer;
 
     public int numOfCherries { get; private set; }
 
     public bool respawnPressed { get; private set; }
+    
 
     private void Start()
     {
         numOfCherries = 0;
+        //timer = 0;
         playerHealth = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerHealth>();
         cherryText.text = "Cherry: " + numOfCherries.ToString(); 
     }
@@ -46,27 +48,24 @@ public class UI : MonoBehaviour
         {
             cherryCounter.SetActive(false);
             timeCounter.SetActive(false);
-            gameOverScreen.SetActive(true);
-            //Time.timeScale = 0;
+            gameOverScreen.SetActive(true);   
         }
     }
 
     public void OnClickRespawn()
     {
+        Time.timeScale = 0;
         respawnPressed = true;
     }
 
     public void OnClickRestart()
     {
-        //Time.timeScale = 1;
-        timer = 0;
-        gameOverScreen.SetActive(false);
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        RestartLevel();
     }
 
     private void LevelTime()
     {
-        timer = Time.time;
+        timer += Time.deltaTime;
         float minutes = Mathf.FloorToInt(timer / 60);
         float seconds = Mathf.FloorToInt(timer % 60);
         timeText.text = string.Format("{0:00}:{1:00}",minutes,seconds);
@@ -74,12 +73,18 @@ public class UI : MonoBehaviour
 
     public void RestartGame()
     {
-        //Time.timeScale = 1;
+        Time.timeScale = 1;
         gameOverScreen.SetActive(false);
         cherryCounter.SetActive(true);
         timeCounter.SetActive(true);
         respawnPressed = false;
         numOfCherries = numOfCherries - 5;
         cherryText.text = "Cherry: " + numOfCherries.ToString();
+    }
+
+    private void RestartLevel()
+    {
+        timer = 0;
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 }
