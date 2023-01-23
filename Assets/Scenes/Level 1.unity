@@ -8454,6 +8454,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 5
   healthbar: {fileID: 1731037875}
+  damageCooldown: 1
 --- !u!114 &1701177800
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9185,7 +9186,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4623942808014318301, guid: 977e9f56e2c524048b6000aa3888f4d1, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2.83
+      value: 0.17
       objectReference: {fileID: 0}
     - target: {fileID: 4623942808014318301, guid: 977e9f56e2c524048b6000aa3888f4d1, type: 3}
       propertyPath: m_LocalPosition.z

@@ -3,13 +3,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Spikehead : MonoBehaviour
+public class Spikehead : DamageScript
 {
     [SerializeField] protected float speed;
     [SerializeField] protected float sightRange;
     [SerializeField] protected float attackDelay;
     [SerializeField] protected LayerMask playerLayer;
-    [SerializeField] protected int damage;
+    //[SerializeField] protected int damage;
     [SerializeField] protected float enemyHealth;
     protected float attackTimer;
     protected Vector3 destination;
@@ -69,7 +69,7 @@ public class Spikehead : MonoBehaviour
         isAttacking = false;
     }
 
-    protected virtual void OnTriggerEnter2D(Collider2D collision)
+    protected override void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.name == "Player")
         {

@@ -2,11 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FireTrap : MonoBehaviour
+public class FireTrap : DamageScript
 {
     [SerializeField] float onTime;
     [SerializeField] float offTime;
-    [SerializeField] int damage;
+    //[SerializeField] int damage;
 
     private bool isActive;
     private bool fireIsActive = false;
@@ -43,7 +43,7 @@ public class FireTrap : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    protected override void OnTriggerEnter2D(Collider2D collision)
     {
         if(collision.gameObject.name == "Player")
         {

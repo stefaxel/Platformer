@@ -11,6 +11,9 @@ public class PlayerHealth : MonoBehaviour
     [SerializeField] private Healthbar healthbar;
     PlayerPosition playerPosition;
     UI ui;
+
+    private bool canTakeDamage = true;
+    [SerializeField] private float damageCooldown;
     
     private void Start()
     {
@@ -27,8 +30,13 @@ public class PlayerHealth : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
-        currentHealth -= damage;
-        healthbar.SetHealth(currentHealth);
+        if (canTakeDamage)
+        {
+            currentHealth -= damage;
+            healthbar.SetHealth(currentHealth);
+            canTakeDamage = false;
+            StartCoroutine(DamageCooldown(damageCooldown));
+        }
     }
 
     private void RespawnPlayer()
@@ -46,6 +54,12 @@ public class PlayerHealth : MonoBehaviour
     {
         currentHealth = currentHealth + health;
         healthbar.SetHealth(currentHealth);
+    }
+
+    private IEnumerator DamageCooldown(float time)
+    {
+        yield return new WaitForSeconds(time);
+        canTakeDamage = true;
     }
 
 }

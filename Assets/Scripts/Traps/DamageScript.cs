@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class DamageScript : MonoBehaviour
 {
-    [SerializeField] int damage;
+    [SerializeField] protected int damage;
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    protected virtual void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.name == "Player")
         {
