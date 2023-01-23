@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 4410085192137839380}
   - component: {fileID: 4410085192137839381}
   - component: {fileID: 4410085192137839382}
+  - component: {fileID: 522370866}
   m_Layer: 0
   m_Name: Fan
   m_TagString: Untagged
@@ -33,7 +34,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &4410085192137839379
 SpriteRenderer:
@@ -189,6 +190,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e441f37e966e5f8448783ff782a2e889, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  onTime: 20
-  offTime: 10
+  onTime: 10
+  offTime: 5
   forceApplied: 20
+--- !u!95 &522370866
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4410085192137839383}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: bdff85f5f322dc94ea598d6e288dfe0f, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0

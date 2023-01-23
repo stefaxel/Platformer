@@ -8,13 +8,16 @@ public class FanTrap : MonoBehaviour
     [SerializeField] float onTime;
     [SerializeField] float offTime;
     [SerializeField] float forceApplied;
-    
+
+    private Animator fanAnimation;
+
     private bool fanIsActive = true;
     private bool isActive = true;
     private bool fanCanBlowPlayer;
 
     private void Start()
     {
+        fanAnimation = GetComponent<Animator>();
         StartCoroutine(FanTrapTrigger());
     }
 
@@ -28,6 +31,7 @@ public class FanTrap : MonoBehaviour
     {
         if (!isActive)
         {
+            fanAnimation.SetBool("activated", false);
             fanCanBlowPlayer = false;
             yield return new WaitForSeconds(offTime);
             fanIsActive = true;
@@ -36,6 +40,7 @@ public class FanTrap : MonoBehaviour
 
         if (isActive)
         {
+            fanAnimation.SetBool("activated", true);
             fanCanBlowPlayer = true;
             yield return new WaitForSeconds(onTime);
             isActive = false;
