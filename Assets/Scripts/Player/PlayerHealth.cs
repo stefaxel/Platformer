@@ -41,7 +41,7 @@ public class PlayerHealth : MonoBehaviour
 
     private void RespawnPlayer()
     {
-        if (ui.restartPressed)
+        if (ui.respawnPressed && ui.numOfCherries == 5)
         {
             ui.RestartGame();
             currentHealth = maxHealth;

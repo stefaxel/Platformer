@@ -111,8 +111,8 @@ Rigidbody2D:
     serializedVersion: 2
     m_Bits: 0
   m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_SleepingMode: 0
+  m_CollisionDetection: 1
   m_Constraints: 4
 --- !u!61 &4623942808014318242
 BoxCollider2D:
@@ -171,11 +171,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c79564ceddc94c4bb6bd89367c22cbc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  damage: 2
   speed: 3
   sightRange: 4
   attackDelay: 0.5
   playerLayer:
     serializedVersion: 2
     m_Bits: 128
-  damage: 2
   enemyHealth: 4

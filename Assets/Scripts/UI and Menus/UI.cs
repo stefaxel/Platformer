@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.SceneManagement;
 using System.Runtime.CompilerServices;
 
 public class UI : MonoBehaviour
@@ -12,12 +13,13 @@ public class UI : MonoBehaviour
 
     PlayerHealth playerHealth;
 
-    int numOfCherries = 0;
+    public int numOfCherries { get; private set; }
 
-    public bool restartPressed { get; private set; }
+    public bool respawnPressed { get; private set; }
 
     private void Start()
     {
+        numOfCherries = 0;
         playerHealth = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerHealth>();
         cherryText.text = "Cherry: " + numOfCherries.ToString(); 
     }
@@ -43,9 +45,16 @@ public class UI : MonoBehaviour
         }
     }
 
-    public void OnClick()
+    public void OnClickRespawn()
     {
-        restartPressed = true;
+        respawnPressed = true;
+    }
+
+    public void OnClickRestart()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        gameOverScreen.SetActive(false);
+        Time.timeScale = 1;
     }
 
     public void RestartGame()
@@ -53,6 +62,8 @@ public class UI : MonoBehaviour
         Time.timeScale = 1;
         gameOverScreen.SetActive(false);
         cherryCounter.SetActive(true);
-        restartPressed = false;
+        respawnPressed = false;
+        numOfCherries = numOfCherries - 5;
+        cherryText.text = "Cherry: " + numOfCherries.ToString();
     }
 }
