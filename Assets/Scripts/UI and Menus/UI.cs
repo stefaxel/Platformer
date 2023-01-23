@@ -8,10 +8,14 @@ using System.Runtime.CompilerServices;
 public class UI : MonoBehaviour
 {
     [SerializeField] TextMeshProUGUI cherryText;
+    [SerializeField] TextMeshProUGUI timeText;
     [SerializeField] GameObject gameOverScreen;
     [SerializeField] GameObject cherryCounter;
+    [SerializeField] GameObject timeCounter;
 
     PlayerHealth playerHealth;
+
+    private float timer = 0;
 
     public int numOfCherries { get; private set; }
 
@@ -27,6 +31,7 @@ public class UI : MonoBehaviour
     private void Update()
     {
         PlayerHealth();
+        LevelTime();
     }
 
     public void AddCollectable(int collectable)
@@ -40,8 +45,9 @@ public class UI : MonoBehaviour
         if(playerHealth.currentHealth <= 0)
         {
             cherryCounter.SetActive(false);
+            timeCounter.SetActive(false);
             gameOverScreen.SetActive(true);
-            Time.timeScale = 0;
+            //Time.timeScale = 0;
         }
     }
 
@@ -52,16 +58,26 @@ public class UI : MonoBehaviour
 
     public void OnClickRestart()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        //Time.timeScale = 1;
+        timer = 0;
         gameOverScreen.SetActive(false);
-        Time.timeScale = 1;
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    private void LevelTime()
+    {
+        timer = Time.time;
+        float minutes = Mathf.FloorToInt(timer / 60);
+        float seconds = Mathf.FloorToInt(timer % 60);
+        timeText.text = string.Format("{0:00}:{1:00}",minutes,seconds);
     }
 
     public void RestartGame()
     {
-        Time.timeScale = 1;
+        //Time.timeScale = 1;
         gameOverScreen.SetActive(false);
         cherryCounter.SetActive(true);
+        timeCounter.SetActive(true);
         respawnPressed = false;
         numOfCherries = numOfCherries - 5;
         cherryText.text = "Cherry: " + numOfCherries.ToString();
