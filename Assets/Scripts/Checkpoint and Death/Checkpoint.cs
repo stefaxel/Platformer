@@ -6,7 +6,9 @@ public class Checkpoint : MonoBehaviour
 {
     PlayerPosition playerPosition;
     Collider2D boxCollider;
+    Animator checkpointAnimation;
 
+    
     private void Awake()
     {
         playerPosition = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerPosition>();
@@ -14,6 +16,7 @@ public class Checkpoint : MonoBehaviour
 
     private void Start()
     {
+        checkpointAnimation = GetComponent<Animator>();
         boxCollider = GetComponent<Collider2D>();
     }
 
@@ -21,6 +24,7 @@ public class Checkpoint : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
+            checkpointAnimation.SetTrigger("trigger");
             playerPosition.UpdateCheckpoint(transform.position);
             boxCollider.enabled = false;
         }
