@@ -7,7 +7,7 @@ public class PlatformBounce : MonoBehaviour
     [SerializeField] float upwardsForce;
     private Animator bounceAnimator;
 
-    bool bounceAnimation;
+    bool bounceAnimation = false;
 
     private void Start()
     {
@@ -19,14 +19,14 @@ public class PlatformBounce : MonoBehaviour
     {
         if (collision.gameObject.name == "Player")
         {
-            bounceAnimator.SetBool("bounce player", true);
+            if(!bounceAnimation)
+            {
+                bounceAnimation = true;
+                bounceAnimator.SetTrigger("bounce");
+                bounceAnimation = false;
+            }
+            //bounceAnimator.SetTrigger("bounce");
             collision.rigidbody.AddForce(Vector2.up * upwardsForce, ForceMode2D.Impulse);
-            SetIdleAnimation();
         }
-    }
-
-    private void SetIdleAnimation()
-    {
-        bounceAnimator.SetBool("bounce player", false);
     }
 }
