@@ -12,8 +12,11 @@ public class FireTrap : DamageScript
     private bool fireIsActive = false;
     private bool canTakeDamage;
 
+    private Animator fireAnimation;
+
     void Start()
     {
+        fireAnimation = GetComponent<Animator>();
         StartCoroutine(FireTrapTrigger());
     }
 
@@ -28,6 +31,7 @@ public class FireTrap : DamageScript
     { 
         if(!isActive)
         {
+            fireAnimation.SetBool("fire active", false);
             canTakeDamage = false;
             yield return new WaitForSeconds(offTime);
             fireIsActive = true;
@@ -36,6 +40,7 @@ public class FireTrap : DamageScript
 
         if(isActive)
         {
+            fireAnimation.SetBool("fire active", true);
             canTakeDamage = true;
             yield return new WaitForSeconds(onTime);
             isActive = false;

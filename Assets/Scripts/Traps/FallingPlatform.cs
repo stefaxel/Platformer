@@ -15,8 +15,11 @@ public class FallingPlatform : MonoBehaviour
 
     bool platformMovingBack;
 
+    private Animator fallingAnimation;
+
     void Awake()
     {
+        fallingAnimation = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
         boxCollider = GetComponent<BoxCollider2D>();
     }
@@ -47,6 +50,7 @@ public class FallingPlatform : MonoBehaviour
     {
         yield return new WaitForSeconds(time);
 
+        fallingAnimation.SetBool("triggered by player", true);
         boxCollider.isTrigger = true;
         rb.isKinematic = false;
         StartCoroutine(WaitForPlatformUp(waitForSecondsUp));
@@ -56,6 +60,7 @@ public class FallingPlatform : MonoBehaviour
     {
         yield return new WaitForSeconds(time);
 
+        fallingAnimation.SetBool("triggered by player", false);
         rb.velocity = Vector2.zero;
         rb.isKinematic = true;
         boxCollider.isTrigger = false;

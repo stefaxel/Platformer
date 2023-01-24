@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 4808089789006385149}
   - component: {fileID: 4808089789006385138}
   - component: {fileID: 4808089789006385139}
+  - component: {fileID: 2146978050}
   m_Layer: 3
   m_Name: Fire
   m_TagString: Untagged
@@ -33,7 +34,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &4808089789006385148
 SpriteRenderer:
@@ -189,6 +190,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bca332963947e7c42a4e3882622bb667, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  damage: 1
   onTime: 5
   offTime: 4
-  damage: 1
+--- !u!95 &2146978050
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4808089789006385136}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 5c95387559890de469821a6e41fd9941, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0

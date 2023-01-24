@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 6383675077953695046}
   - component: {fileID: 6383675077953695047}
   - component: {fileID: 6383675077953695040}
+  - component: {fileID: 5095184888108019240}
   m_Layer: 0
   m_Name: Saw
   m_TagString: Untagged
@@ -151,6 +152,26 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 1.1
+--- !u!95 &5095184888108019240
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6383675077953695042}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 85fc1a1b099070a4db1c3c06164fac11, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
 --- !u!1 &6383675078028065174
 GameObject:
   m_ObjectHideFlags: 0
@@ -245,5 +266,5 @@ Transform:
   - {fileID: 6383675078028065173}
   - {fileID: 6383675078353733286}
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
