@@ -30,7 +30,6 @@ public class PlayerMovement : MonoBehaviour
     Vector2 movementInputX;
     Vector2 movementInputY;
     Rigidbody2D rb;
-    bool turning;
     bool canMoveX = true;
     private bool canMoveY = false;
     private bool wallGrab = false;
@@ -43,6 +42,9 @@ public class PlayerMovement : MonoBehaviour
     InputAction moveAction;
 
     Animator playerAnimation;
+
+    private enum AnimationState { idle, running, jumping, falling }
+    private AnimationState state;
 
     private void Awake()
     {
@@ -63,6 +65,17 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
+        AppyCoyoteTime();
+
+        ApplyFlip();
+
+        ApplyGravityForces();
+
+        UpdateAnimation();
+    }
+
+    private void AppyCoyoteTime()
+    {
         // Allows player to jump if they were recently grounded/on a wall
         if (IsGrounded() || IsOnWall())
         {
@@ -72,38 +85,60 @@ public class PlayerMovement : MonoBehaviour
         {
             coyoteTimeCounter -= Time.deltaTime;
         }
+    }
 
+    private void ApplyFlip()
+    {
+        // FLips sprite depending on direction
+        if (movementInputX.x > 0f && !isFacingRight)
+        {
+            Flip();
+        }
+        if (movementInputX.x < 0f && isFacingRight)
+        {
+            Flip();
+        }
+    }
+
+    private void ApplyGravityForces()
+    {
         // Applying gravity depending on if the player is falling or pressing and holding the jump key
-        if (rb.velocity.y < 0 && !wallJump)
+        if (rb.velocity.y < -Mathf.Epsilon && !wallJump)
         {
             rb.velocity += Vector2.up * Physics2D.gravity.y * (fallRate - 1) * Time.deltaTime;
         }
-        else if (rb.velocity.y > 0 && !jumpAction.IsPressed() && !wallJump)
+        if (rb.velocity.y > 0 && !jumpAction.IsPressed() && !wallJump)
         {
             rb.velocity += Vector2.up * Physics2D.gravity.y * (lowJumpRate - 1) * Time.deltaTime;
         }
+    }
 
-        // FLips sprite depending on direction
-        if (movementInputX.x > 0 && !isFacingRight)
-        {
-            Flip();
-        }
-        if (movementInputX.x < 0 && isFacingRight)
-        {
-            Flip();
-        }
-
+    private void UpdateAnimation()
+    {
         // Triggers which animation to play
-        if(movementInputX.x > 0f)
+        if (movementInputX.x > 0)
         {
-            playerAnimation.SetBool("running", true);
+            state = AnimationState.running;
         }
-        else if (movementInputX.x < 0f)
+        else if (movementInputX.x < 0)
         {
-            playerAnimation.SetBool("running", true);
+            state = AnimationState.running;
         }
         else
-            playerAnimation.SetBool("running", false);
+            state = AnimationState.idle;
+
+        if (rb.velocity.y > 0)
+        {
+            state = AnimationState.jumping;
+        }
+        else if (rb.velocity.y < -Mathf.Epsilon)
+        {
+            state = AnimationState.falling;
+        }
+
+        Debug.Log(rb.velocity.y);
+
+        playerAnimation.SetInteger("state", (int)state);
     }
 
     public void OnMove(InputAction.CallbackContext context)
@@ -117,7 +152,6 @@ public class PlayerMovement : MonoBehaviour
         {
             movementInputY = context.ReadValue<Vector2>();
         }
-
     }
 
     public void OnJump(InputAction.CallbackContext context)
@@ -144,7 +178,7 @@ public class PlayerMovement : MonoBehaviour
         {
             rb.AddForce(Vector2.up * jumpForce);
             canDoubleJump = true;
-        }
+        } 
         // Allows player to double jump
         if (context.action.triggered && !IsGrounded() && canDoubleJump && !wallJump)
         {
@@ -159,16 +193,16 @@ public class PlayerMovement : MonoBehaviour
             // Flips the sprite in the correct direction
             if (wallJump && IsOnWall() && isFacingRight && context.action.triggered && !wallGrab)
             {
-                Vector2 jumpDirection = new Vector2(wallJumpSpeed * -wallJumpDirection , wallJumpForce);
+                Vector2 jumpDirection = new Vector2(wallJumpSpeed * -wallJumpDirection, wallJumpForce);
                 rb.AddForce(jumpDirection, ForceMode2D.Impulse);
-                
+
                 Flip();
             }
             if (wallJump && IsOnWall() && !isFacingRight && context.action.triggered && !wallGrab)
             {
                 Vector2 jumpDirection = new Vector2(wallJumpSpeed * wallJumpDirection, wallJumpForce);
                 rb.AddForce(jumpDirection, ForceMode2D.Impulse);
-                
+
                 Flip();
             }
         }
@@ -209,12 +243,12 @@ public class PlayerMovement : MonoBehaviour
         rb.velocity = Vector2.ClampMagnitude(rb.velocity, maxSpeed);
 
         float force = movementInputX.x * maxSpeed * accelerationSpeed * Time.deltaTime;
-        if (Mathf.Abs(movementInputX.x) < 0.1f)// && !turning)
+        if (Mathf.Abs(movementInputX.x) < 0.1f)
         {
             force = -rb.velocity.x * decelerationSpeed;
         }
         rb.AddForce(new Vector2(force, 0));
-        //rb.AddForce(movementInput * maxSpeed * Time.deltaTime);
+        
 
         // Use different value for wall climb acceleration
         if (wallGrab && wallClimbAction.IsPressed() && IsOnWall())
@@ -237,7 +271,7 @@ public class PlayerMovement : MonoBehaviour
             }
         }
     }
-
+    //rb.AddForce(movementInput * maxSpeed * Time.deltaTime);
     private void Flip()
     {
         // Method to flip the sprite
