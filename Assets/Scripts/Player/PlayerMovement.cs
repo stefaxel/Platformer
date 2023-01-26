@@ -43,7 +43,7 @@ public class PlayerMovement : MonoBehaviour
 
     Animator playerAnimation;
 
-    private enum AnimationState { idle, running, jumping, falling }
+    private enum AnimationState { idle, running, jumping, falling, doubleJump }
     private AnimationState state;
 
     private void Awake()
@@ -72,6 +72,7 @@ public class PlayerMovement : MonoBehaviour
         ApplyGravityForces();
 
         UpdateAnimation();
+
     }
 
     private void AppyCoyoteTime()
@@ -130,13 +131,15 @@ public class PlayerMovement : MonoBehaviour
         if (rb.velocity.y > 0)
         {
             state = AnimationState.jumping;
+            if (canDoubleJump && jumpAction.IsPressed())
+            {
+                state = AnimationState.doubleJump;
+            }
         }
-        else if (rb.velocity.y < -Mathf.Epsilon)
+        else if (rb.velocity.y < -1f)
         {
             state = AnimationState.falling;
         }
-
-        Debug.Log(rb.velocity.y);
 
         playerAnimation.SetInteger("state", (int)state);
     }
