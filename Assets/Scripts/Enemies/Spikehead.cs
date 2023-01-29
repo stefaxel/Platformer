@@ -16,6 +16,8 @@ public class Spikehead : DamageScript
 
     protected bool isAttacking;
 
+    [SerializeField] protected AudioClip audioImpact;
+
     protected Vector3[] direction = new Vector3[4];
 
     protected virtual void OnEnable()
@@ -74,11 +76,13 @@ public class Spikehead : DamageScript
         if (collision.gameObject.name == "Player")
         {
             collision.gameObject.GetComponent<PlayerHealth>().TakeDamage(damage);
+            SoundManager.instance.PlaySound(audioImpact);
             StopAttacking();
         }
         if(collision.gameObject.name == "Wall" || collision.gameObject.name == "Ground")
         {
             enemyHealth--;
+            SoundManager.instance.PlaySound(audioImpact);
             StopAttacking();
         }     
     }

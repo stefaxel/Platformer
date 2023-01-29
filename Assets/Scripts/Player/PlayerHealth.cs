@@ -14,6 +14,8 @@ public class PlayerHealth : MonoBehaviour
 
     private bool canTakeDamage = true;
     [SerializeField] private float damageCooldown;
+
+    [SerializeField] private AudioClip hurtSound;
     
     private void Start()
     {
@@ -33,6 +35,7 @@ public class PlayerHealth : MonoBehaviour
         if (canTakeDamage)
         {
             currentHealth -= damage;
+            SoundManager.instance.PlaySound(hurtSound);
             healthbar.SetHealth(currentHealth);
             canTakeDamage = false;
             StartCoroutine(DamageCooldown(damageCooldown));

@@ -13,6 +13,7 @@ public class FireTrap : DamageScript
     private bool canTakeDamage;
 
     private Animator fireAnimation;
+    //[SerializeField] private AudioClip fireAudio;
 
     void Start()
     {
@@ -41,6 +42,7 @@ public class FireTrap : DamageScript
         if(isActive)
         {
             fireAnimation.SetBool("fire active", true);
+            //SoundManager.instance.PlaySound(fireAudio);
             canTakeDamage = true;
             yield return new WaitForSeconds(onTime);
             isActive = false;

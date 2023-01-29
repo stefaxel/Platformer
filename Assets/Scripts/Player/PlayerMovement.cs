@@ -36,6 +36,8 @@ public class PlayerMovement : MonoBehaviour
     public bool isFacingRight;
     bool wallJump = false;
 
+    [SerializeField] private AudioClip jumpAudio;
+
     PlayerInput playerInput;
     InputAction jumpAction;
     InputAction wallClimbAction;
@@ -161,6 +163,7 @@ public class PlayerMovement : MonoBehaviour
     {
         Jump(context);
 
+
         //if (!IsGrounded() && IsWallClimbing() && context.performed && wallAction.IsPressed())
         //{
         //    wallJumpCooldown = 0;
@@ -181,12 +184,16 @@ public class PlayerMovement : MonoBehaviour
         {
             rb.AddForce(Vector2.up * jumpForce);
             canDoubleJump = true;
+
+            SoundManager.instance.PlaySound(jumpAudio);
         } 
         // Allows player to double jump
         if (context.action.triggered && !IsGrounded() && canDoubleJump && !wallJump)
         {
             rb.AddForce(Vector2.up * jumpForce);
             canDoubleJump = false;
+
+            SoundManager.instance.PlaySound(jumpAudio);
         }
         // Allows player to wall jump
         if (IsOnWall() && context.action.triggered && !wallClimbAction.IsPressed())
@@ -199,12 +206,16 @@ public class PlayerMovement : MonoBehaviour
                 Vector2 jumpDirection = new Vector2(wallJumpSpeed * -wallJumpDirection, wallJumpForce);
                 rb.AddForce(jumpDirection, ForceMode2D.Impulse);
 
+                SoundManager.instance.PlaySound(jumpAudio);
+
                 Flip();
             }
             if (wallJump && IsOnWall() && !isFacingRight && context.action.triggered && !wallGrab)
             {
                 Vector2 jumpDirection = new Vector2(wallJumpSpeed * wallJumpDirection, wallJumpForce);
                 rb.AddForce(jumpDirection, ForceMode2D.Impulse);
+
+                SoundManager.instance.PlaySound(jumpAudio);
 
                 Flip();
             }

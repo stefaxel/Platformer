@@ -179,3 +179,4 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   enemyHealth: 2
+  audioImpact: {fileID: 8300000, guid: c1321952f60d47745a4e337c7dcc977a, type: 3}
