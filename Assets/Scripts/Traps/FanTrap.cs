@@ -36,21 +36,24 @@ public class FanTrap : MonoBehaviour
         if (!isActive)
         {
             fanAnimation.SetBool("activated", false);
-            audioSource.Stop();
             fanCanBlowPlayer = false;
             yield return new WaitForSeconds(offTime);
             fanIsActive = true;
+            if (!audioSource.isPlaying)
+            {
+                audioSource.PlayOneShot(fanAudio, volume);
+            }
             isActive = true;
         }
 
         if (isActive)
         {
             fanAnimation.SetBool("activated", true);
-            audioSource.PlayOneShot(fanAudio, volume);
             fanCanBlowPlayer = true;
             yield return new WaitForSeconds(onTime);
             isActive = false;
             fanIsActive = false;
+            audioSource.Stop();
         }
     }
 
