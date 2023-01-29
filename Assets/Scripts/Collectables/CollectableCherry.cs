@@ -7,6 +7,8 @@ public class CollectableCherry : MonoBehaviour
     [SerializeField] int cherryPoint;
     UI ui;
 
+    [SerializeField] private AudioClip audioCollectable;
+
     private void Start()
     {
         ui = GameObject.FindGameObjectWithTag("UI").GetComponent<UI>();
@@ -17,6 +19,7 @@ public class CollectableCherry : MonoBehaviour
         if (collision.gameObject.name == "Player")
         {
             ui.AddCollectable(cherryPoint);
+            SoundManager.instance.PlaySound(audioCollectable);
             Destroy(gameObject);
         }
     }

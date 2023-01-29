@@ -15,7 +15,9 @@ public class FanTrap : MonoBehaviour
     private bool isActive = true;
     private bool fanCanBlowPlayer;
 
-    //[SerializeField] private AudioClip fanAudio;
+    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioClip fanAudio;
+    [SerializeField] private float volume;
 
     private void Start()
     {
@@ -34,6 +36,7 @@ public class FanTrap : MonoBehaviour
         if (!isActive)
         {
             fanAnimation.SetBool("activated", false);
+            audioSource.Stop();
             fanCanBlowPlayer = false;
             yield return new WaitForSeconds(offTime);
             fanIsActive = true;
@@ -43,7 +46,7 @@ public class FanTrap : MonoBehaviour
         if (isActive)
         {
             fanAnimation.SetBool("activated", true);
-            //SoundManager.instance.PlaySoundTime(onTime, fanAudio);
+            audioSource.PlayOneShot(fanAudio, volume);
             fanCanBlowPlayer = true;
             yield return new WaitForSeconds(onTime);
             isActive = false;

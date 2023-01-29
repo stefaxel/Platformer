@@ -7,6 +7,7 @@ public class AddHealth : MonoBehaviour
     [SerializeField] int healthPoint;
 
     [SerializeField] PlayerHealth playerHealth;
+    [SerializeField] private AudioClip healthAudio;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -15,6 +16,7 @@ public class AddHealth : MonoBehaviour
             if(playerHealth.currentHealth < 5)
             {
                 playerHealth.AddHealth(healthPoint);
+                SoundManager.instance.PlaySound(healthAudio);
                 Destroy(gameObject);
             }
         }

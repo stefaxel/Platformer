@@ -74,7 +74,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: -1
+  m_SortingOrder: 8
   m_Sprite: {fileID: 21300000, guid: bd961ef8f1c946b42b783385ea412c83, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -100,6 +100,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   healthPoint: 1
   playerHealth: {fileID: 0}
+  healthAudio: {fileID: 8300000, guid: 8cf00cc271c70c04abbeb065a0689d98, type: 3}
 --- !u!58 &422654353031721592
 CircleCollider2D:
   m_ObjectHideFlags: 0
