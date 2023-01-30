@@ -5,9 +5,11 @@ using UnityEngine;
 public class PlatformBounce : MonoBehaviour
 {
     [SerializeField] float upwardsForce;
+    
     private Animator bounceAnimator;
-
     bool bounceAnimation = false;
+
+    [SerializeField] private AudioClip bounceAudio;
 
     private void Start()
     {
@@ -21,6 +23,8 @@ public class PlatformBounce : MonoBehaviour
         {
             if(!bounceAnimation)
             {
+                SoundManager.instance.PlaySound(bounceAudio);
+
                 bounceAnimation = true;
                 bounceAnimator.SetTrigger("bounce");
                 bounceAnimation = false;

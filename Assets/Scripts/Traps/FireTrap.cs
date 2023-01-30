@@ -13,7 +13,10 @@ public class FireTrap : DamageScript
     private bool canTakeDamage;
 
     private Animator fireAnimation;
-    //[SerializeField] private AudioClip fireAudio;
+
+    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioClip fireAudio;
+    [SerializeField] private float volume;
 
     void Start()
     {
@@ -36,6 +39,10 @@ public class FireTrap : DamageScript
             canTakeDamage = false;
             yield return new WaitForSeconds(offTime);
             fireIsActive = true;
+            if (!audioSource.isPlaying)
+            {
+                audioSource.PlayOneShot(fireAudio, volume);
+            }
             isActive = true;
         }
 
@@ -47,6 +54,7 @@ public class FireTrap : DamageScript
             yield return new WaitForSeconds(onTime);
             isActive = false;
             fireIsActive = false;
+            audioSource.Stop();
         }
     }
 
