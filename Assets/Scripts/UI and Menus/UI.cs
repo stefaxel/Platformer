@@ -20,7 +20,6 @@ public class UI : MonoBehaviour
     public int numOfCherries { get; private set; }
 
     public bool respawnPressed { get; private set; }
-    
 
     private void Start()
     {
@@ -32,8 +31,9 @@ public class UI : MonoBehaviour
 
     private void Update()
     {
-        PlayerHealth();
+        //PlayerHealth();
         LevelTime();
+        Debug.Log("still running?");
     }
 
     public void AddCollectable(int collectable)
@@ -42,13 +42,13 @@ public class UI : MonoBehaviour
         cherryText.text = "Cherry: " + numOfCherries.ToString();
     }
 
-    private void PlayerHealth()
+    public void PlayerHealth()
     {
         if(playerHealth.currentHealth <= 0)
         {
             cherryCounter.SetActive(false);
             timeCounter.SetActive(false);
-            gameOverScreen.SetActive(true);   
+            //gameOverScreen.SetActive(true);
         }
     }
 

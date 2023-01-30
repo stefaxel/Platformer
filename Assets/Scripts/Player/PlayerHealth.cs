@@ -16,18 +16,29 @@ public class PlayerHealth : MonoBehaviour
     [SerializeField] private float damageCooldown;
 
     [SerializeField] private AudioClip hurtSound;
-    
+    [SerializeField] private AudioClip failSound;
+
+    private Animator playerDeath;
+
+    private Rigidbody2D rb;
+
     private void Start()
     {
         playerPosition = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerPosition>();
         ui = GameObject.FindGameObjectWithTag("UI").GetComponent<UI>();
+        
         currentHealth = maxHealth;
-        healthbar.SetMaxHealth(maxHealth); 
+        healthbar.SetMaxHealth(maxHealth);
+        
+        playerDeath = GetComponent<Animator>();
+
+        rb = GetComponent<Rigidbody2D>();
     }
 
     private void Update()
     {
         RespawnPlayer();
+        OnDeath();
     }
 
     public void TakeDamage(int damage)
@@ -35,7 +46,8 @@ public class PlayerHealth : MonoBehaviour
         if (canTakeDamage)
         {
             currentHealth -= damage;
-            SoundManager.instance.PlaySound(hurtSound);
+            if(currentHealth > 0)
+                SoundManager.instance.PlaySound(hurtSound);
             healthbar.SetHealth(currentHealth);
             canTakeDamage = false;
             StartCoroutine(DamageCooldown(damageCooldown));
@@ -49,6 +61,10 @@ public class PlayerHealth : MonoBehaviour
             ui.RestartGame();
             currentHealth = maxHealth;
             healthbar.SetHealth(currentHealth);
+
+            rb.bodyType = RigidbodyType2D.Dynamic;
+            playerDeath.SetBool("respawn", true);
+
             transform.position = playerPosition.respawnPlayer;
         }
     }
@@ -63,6 +79,19 @@ public class PlayerHealth : MonoBehaviour
     {
         yield return new WaitForSeconds(time);
         canTakeDamage = true;
+    }
+
+    private void OnDeath()
+    {
+        if (currentHealth <= 0)
+        {
+            rb.bodyType = RigidbodyType2D.Static;
+
+            ui.PlayerHealth();
+
+            playerDeath.SetTrigger("death");
+            //SoundManager.instance.PlaySound(failSound);
+        }
     }
 
 }

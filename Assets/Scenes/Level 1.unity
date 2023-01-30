@@ -61272,6 +61272,7 @@ MonoBehaviour:
   healthbar: {fileID: 1731037875}
   damageCooldown: 1
   hurtSound: {fileID: 8300000, guid: e79d1f28dabc62f4b9f3d61725199408, type: 3}
+  failSound: {fileID: 8300000, guid: 3ab39c5c4e32b324d83ff0e304a36050, type: 3}
 --- !u!114 &1701177800
 MonoBehaviour:
   m_ObjectHideFlags: 0
