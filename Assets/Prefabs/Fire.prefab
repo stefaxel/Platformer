@@ -196,7 +196,7 @@ MonoBehaviour:
   offTime: 4
   audioSource: {fileID: 2101368827}
   fireAudio: {fileID: 8300000, guid: 020879d0097cc7b4eb6ba5da5643fa75, type: 3}
-  volume: 5
+  volume: 3
 --- !u!95 &2146978050
 Animator:
   serializedVersion: 5

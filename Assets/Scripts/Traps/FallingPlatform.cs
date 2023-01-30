@@ -8,6 +8,7 @@ public class FallingPlatform : MonoBehaviour
     [SerializeField] float waitForSecondsDown;
     [SerializeField] float waitForSecondsUp;
     [SerializeField] float speed;
+    bool isFalling = false;
 
     Vector2 initialPos;
     BoxCollider2D boxCollider;
@@ -16,6 +17,10 @@ public class FallingPlatform : MonoBehaviour
     bool platformMovingBack;
 
     private Animator fallingAnimation;
+
+    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioClip motorAudio;
+    [SerializeField] private float volume;
 
     void Awake()
     {
@@ -27,6 +32,7 @@ public class FallingPlatform : MonoBehaviour
     private void Start()
     {
         initialPos = transform.position;
+        audioSource.PlayOneShot(motorAudio, volume);
     }
 
     private void Update()
@@ -36,6 +42,11 @@ public class FallingPlatform : MonoBehaviour
 
         if (transform.position.y == initialPos.y)
             platformMovingBack = false;
+
+        if (!audioSource.isPlaying && !isFalling)
+        {
+            audioSource.PlayOneShot(motorAudio, volume);
+        }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -53,6 +64,8 @@ public class FallingPlatform : MonoBehaviour
         fallingAnimation.SetBool("triggered by player", true);
         boxCollider.isTrigger = true;
         rb.isKinematic = false;
+        audioSource.Stop();
+        isFalling = true;
         StartCoroutine(WaitForPlatformUp(waitForSecondsUp));
     }
 
@@ -60,9 +73,14 @@ public class FallingPlatform : MonoBehaviour
     {
         yield return new WaitForSeconds(time);
 
+        if (!audioSource.isPlaying)
+        {
+            audioSource.PlayOneShot(motorAudio, volume);
+        }
         fallingAnimation.SetBool("triggered by player", false);
         rb.velocity = Vector2.zero;
         rb.isKinematic = true;
+        isFalling = false;
         boxCollider.isTrigger = false;
         platformMovingBack = true;
 

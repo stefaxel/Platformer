@@ -8,7 +8,8 @@ public class Checkpoint : MonoBehaviour
     Collider2D boxCollider;
     Animator checkpointAnimation;
 
-    
+    [SerializeField] private AudioClip checkpointAudio;
+
     private void Awake()
     {
         playerPosition = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerPosition>();
@@ -25,6 +26,7 @@ public class Checkpoint : MonoBehaviour
         if (collision.CompareTag("Player"))
         {
             checkpointAnimation.SetTrigger("trigger");
+            SoundManager.instance.PlaySound(checkpointAudio);
             playerPosition.UpdateCheckpoint(transform.position);
             boxCollider.enabled = false;
         }

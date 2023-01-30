@@ -75,7 +75,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: -1
+  m_SortingOrder: 8
   m_Sprite: {fileID: 21300000, guid: 4668f08864533f24b9b5980d5cc57089, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -144,6 +144,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ed8720c445cbb34bbaba1879a45ebcd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  checkpointAudio: {fileID: 8300000, guid: 1b101ec1757b4504780f371772c99cf3, type: 3}
 --- !u!95 &1079500338
 Animator:
   serializedVersion: 5
