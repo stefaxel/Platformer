@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using System;
+using UnityEngine.SceneManagement;
 
 public class PlayerHealth : MonoBehaviour
 {
@@ -66,9 +67,11 @@ public class PlayerHealth : MonoBehaviour
             healthbar.SetHealth(currentHealth);
 
             rb.bodyType = RigidbodyType2D.Dynamic;
-            playerDeath.SetBool("respawn", true);
 
             transform.position = playerPosition.respawnPlayer;
+            
+            playerDeath.SetBool("respawn", true);
+            canTakeDamage = true;
         }
     }
 
@@ -84,19 +87,34 @@ public class PlayerHealth : MonoBehaviour
         canTakeDamage = true;
     }
 
-    private void OnDeath()
+    public void OnDeath()
     {
+        bool triggerDeath = true;
+
         if (currentHealth <= 0)
         {
+            canTakeDamage = false;
             rb.bodyType = RigidbodyType2D.Static;
 
-            ui.PlayerHealth();
+            //ui.PlayerHealth();
 
             //PlayerDeath();
 
-            playerDeath.SetTrigger("death");
+            if (triggerDeath)
+            {
+                playerDeath.SetTrigger("death");
+                triggerDeath = false;
+            }
+            
+
+            //SceneManager.LoadScene(SceneManager.GetActiveScene().name);
             //SoundManager.instance.PlaySound(failSound);
         }
+    }
+
+    public void RestartLevel()
+    {
+        ui.PlayerHealth();
     }
 
     //public void PlayerDeath()

@@ -31,7 +31,7 @@ public class UI : MonoBehaviour
 
     private void Update()
     {
-        PlayerHealth();
+        //PlayerHealth();
         LevelTime();
     }
 
@@ -58,18 +58,21 @@ public class UI : MonoBehaviour
 
     public void PlayerHealth()
     {
-        if(playerHealth.currentHealth <= 0)
-        {
+        //if(playerHealth.currentHealth <= 0)
+        //{
             cherryCounter.SetActive(false);
             timeCounter.SetActive(false);
             gameOverScreen.SetActive(true);
-        }
+        //}
     }
 
     public void OnClickRespawn()
     {
-        Time.timeScale = 0;
-        respawnPressed = true;
+        if(numOfCherries >= 5)
+        {
+            Time.timeScale = 0;
+            respawnPressed = true;
+        }
     }
 
     public void OnClickRestart()
