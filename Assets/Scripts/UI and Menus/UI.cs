@@ -31,10 +31,24 @@ public class UI : MonoBehaviour
 
     private void Update()
     {
-        //PlayerHealth();
+        PlayerHealth();
         LevelTime();
-        Debug.Log("still running?");
     }
+
+    //private void OnEnable()
+    //{
+    //    PlayerHealth.OnPlayerDeath += EnableGameOverMenu;
+    //}
+
+    //private void OnDisable()
+    //{
+    //    PlayerHealth.OnPlayerDeath -= EnableGameOverMenu;
+    //}
+
+    //private void EnableGameOverMenu()
+    //{
+    //    gameOverScreen.SetActive(true);
+    //}
 
     public void AddCollectable(int collectable)
     {
@@ -48,7 +62,7 @@ public class UI : MonoBehaviour
         {
             cherryCounter.SetActive(false);
             timeCounter.SetActive(false);
-            //gameOverScreen.SetActive(true);
+            gameOverScreen.SetActive(true);
         }
     }
 

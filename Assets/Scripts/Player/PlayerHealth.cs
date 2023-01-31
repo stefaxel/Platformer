@@ -2,9 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using System;
 
 public class PlayerHealth : MonoBehaviour
 {
+    //public static event Action OnPlayerDeath;
+
     [SerializeField] private int maxHealth;
     [SerializeField] public int currentHealth { get; private set; }
 
@@ -54,7 +57,7 @@ public class PlayerHealth : MonoBehaviour
         }
     }
 
-    private void RespawnPlayer()
+    public void RespawnPlayer()
     {
         if (ui.respawnPressed && ui.numOfCherries >= 5)
         {
@@ -89,9 +92,16 @@ public class PlayerHealth : MonoBehaviour
 
             ui.PlayerHealth();
 
+            //PlayerDeath();
+
             playerDeath.SetTrigger("death");
             //SoundManager.instance.PlaySound(failSound);
         }
     }
+
+    //public void PlayerDeath()
+    //{
+    //    OnPlayerDeath?.Invoke();
+    //}
 
 }
