@@ -143,6 +143,16 @@ public class UI : MonoBehaviour
         RestartLevel();
     }
 
+    public void ToMainMenu()
+    {
+        pauseUI.SetActive(false);
+        AudioListener.pause = false;
+        Time.timeScale = 1;
+        isPaused = false;
+
+        SceneManager.LoadScene(0);
+    }
+
     public void RestartLevel()
     {
         timer = 0;

@@ -7,8 +7,6 @@ using UnityEngine.SceneManagement;
 
 public class PlayerHealth : MonoBehaviour
 {
-    //public static event Action OnPlayerDeath;
-
     [SerializeField] private int maxHealth;
     [SerializeField] public int currentHealth { get; private set; }
 
@@ -23,6 +21,8 @@ public class PlayerHealth : MonoBehaviour
     [SerializeField] private AudioClip failSound;
 
     private Animator playerDeath;
+
+    bool deathAnimation = true;
 
     private Rigidbody2D rb;
 
@@ -42,7 +42,11 @@ public class PlayerHealth : MonoBehaviour
     private void Update()
     {
         RespawnPlayer();
-        OnDeath();
+
+        if(deathAnimation)
+            OnDeath();
+
+        Debug.Log(deathAnimation);
     }
 
     public void TakeDamage(int damage)
@@ -62,6 +66,8 @@ public class PlayerHealth : MonoBehaviour
     {
         if (ui.respawnPressed && ui.numOfCherries >= 5)
         {
+            deathAnimation = true;
+
             ui.RestartGame();
             currentHealth = maxHealth;
             healthbar.SetHealth(currentHealth);
@@ -87,44 +93,35 @@ public class PlayerHealth : MonoBehaviour
         canTakeDamage = true;
     }
 
-    public void OnDeath()
+    private void OnDeath()
     {
-        //bool triggerDeath = true;
-
-        if (currentHealth <= 0)
+        bool triggerDeath = true;
+        if (currentHealth <= 0 && deathAnimation)
         {
+            
             canTakeDamage = false;
             rb.bodyType = RigidbodyType2D.Static;
 
-            //ui.PlayerHealth();
-
-            //PlayerDeath();
-
 
             playerDeath.SetBool("death", true);
-            //playerDeath.SetTrigger("death");
-
-            //if (triggerDeath)
-            //{
-            //    playerDeath.SetTrigger("death");
-            //    triggerDeath = false;
-            //    Debug.Log(triggerDeath);
-            //}
-
-
-            //SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-            //SoundManager.instance.PlaySound(failSound);
+            if(triggerDeath)
+            {
+                deathAnimation = false;
+            }
+            
+            
         }
+
+        triggerDeath = false;
+
     }
 
     public void RestartLevel()
     {
+        deathAnimation = true;
         ui.PlayerHealth();
     }
 
-    //public void PlayerDeath()
-    //{
-    //    OnPlayerDeath?.Invoke();
-    //}
+    
 
 }
