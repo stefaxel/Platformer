@@ -135,7 +135,15 @@ public class UI : MonoBehaviour
         cherryText.text = "Cherry: " + numOfCherries.ToString();
     }
 
-    private void RestartLevel()
+    public void RestartGameButton()
+    {
+        pauseUI.SetActive(false);
+        AudioListener.pause = false;
+        Time.timeScale = 1;
+        RestartLevel();
+    }
+
+    public void RestartLevel()
     {
         timer = 0;
         isPaused = false;
