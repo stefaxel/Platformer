@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.SceneManagement;
+using UnityEngine.InputSystem;
 using System.Runtime.CompilerServices;
+using System;
 
 public class UI : MonoBehaviour
 {
@@ -12,8 +14,14 @@ public class UI : MonoBehaviour
     [SerializeField] GameObject gameOverScreen;
     [SerializeField] GameObject cherryCounter;
     [SerializeField] GameObject timeCounter;
+    [SerializeField] GameObject pauseUI;
+
+    public static bool isPaused = false;
 
     PlayerHealth playerHealth;
+
+    PauseAction action;
+    InputAction ui;
 
     private float timer;
 
@@ -24,9 +32,23 @@ public class UI : MonoBehaviour
     private void Start()
     {
         numOfCherries = 0;
-        //timer = 0;
         playerHealth = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerHealth>();
-        cherryText.text = "Cherry: " + numOfCherries.ToString(); 
+        cherryText.text = "Cherry: " + numOfCherries.ToString();
+
+        action.Pause.PauseGame.performed += _ => DeterminePause();
+    }
+
+    private void DeterminePause()
+    {
+        if (isPaused)
+            DeactivateMenu();
+        else
+            ActivateMenu();
+    }
+
+    private void Awake()
+    {
+        action = new PauseAction();
     }
 
     private void Update()
@@ -35,20 +57,33 @@ public class UI : MonoBehaviour
         LevelTime();
     }
 
-    //private void OnEnable()
-    //{
-    //    PlayerHealth.OnPlayerDeath += EnableGameOverMenu;
-    //}
+    private void OnEnable()
+    {
+        action.Enable();
+    }
 
-    //private void OnDisable()
-    //{
-    //    PlayerHealth.OnPlayerDeath -= EnableGameOverMenu;
-    //}
+    private void OnDisable()
+    {
+        action.Disable();
+    }
 
-    //private void EnableGameOverMenu()
-    //{
-    //    gameOverScreen.SetActive(true);
-    //}
+    public void DeactivateMenu()
+    {
+        Time.timeScale = 1;
+        AudioListener.pause = false;
+        pauseUI.SetActive(false);
+
+        isPaused = false;
+    }
+
+    public void ActivateMenu()
+    {
+        Time.timeScale = 0;
+        AudioListener.pause = true;
+        pauseUI.SetActive(true);
+
+        isPaused = true;
+    }
 
     public void AddCollectable(int collectable)
     {
@@ -58,17 +93,17 @@ public class UI : MonoBehaviour
 
     public void PlayerHealth()
     {
-        //if(playerHealth.currentHealth <= 0)
-        //{
-            cherryCounter.SetActive(false);
-            timeCounter.SetActive(false);
-            gameOverScreen.SetActive(true);
-        //}
+
+        isPaused = true;
+        cherryCounter.SetActive(false);
+        timeCounter.SetActive(false);
+        gameOverScreen.SetActive(true);
+
     }
 
     public void OnClickRespawn()
     {
-        if(numOfCherries >= 5)
+        if (numOfCherries >= 5)
         {
             Time.timeScale = 0;
             respawnPressed = true;
@@ -85,7 +120,7 @@ public class UI : MonoBehaviour
         timer += Time.deltaTime;
         float minutes = Mathf.FloorToInt(timer / 60);
         float seconds = Mathf.FloorToInt(timer % 60);
-        timeText.text = string.Format("{0:00}:{1:00}",minutes,seconds);
+        timeText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
     }
 
     public void RestartGame()
@@ -96,12 +131,14 @@ public class UI : MonoBehaviour
         timeCounter.SetActive(true);
         respawnPressed = false;
         numOfCherries = numOfCherries - 5;
+        isPaused = false;
         cherryText.text = "Cherry: " + numOfCherries.ToString();
     }
 
     private void RestartLevel()
     {
         timer = 0;
+        isPaused = false;
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 }

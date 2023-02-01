@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Spikehead : DamageScript
@@ -71,7 +72,12 @@ public class Spikehead : DamageScript
         isAttacking = false;
     }
 
-    protected override void OnTriggerEnter2D(Collider2D collision)
+    //protected virtual void OnCollisionEnter2D(Collider2D collision)
+    //{
+            
+    //}
+
+    protected virtual void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.name == "Player")
         {
@@ -79,11 +85,11 @@ public class Spikehead : DamageScript
             SoundManager.instance.PlaySound(audioImpact);
             StopAttacking();
         }
-        if(collision.gameObject.name == "Wall" || collision.gameObject.name == "Ground")
+        if (collision.gameObject.name == "Wall" || collision.gameObject.name == "Ground")
         {
             enemyHealth--;
             SoundManager.instance.PlaySound(audioImpact);
             StopAttacking();
-        }     
+        }
     }
 }

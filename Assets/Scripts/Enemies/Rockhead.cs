@@ -39,8 +39,14 @@ public class Rockhead : Spikehead
         base.StopAttacking();
     }
 
-    protected override void OnTriggerEnter2D(Collider2D collision)
+    //protected override void OnCollisionEnter2D(Collider2D collision)
+    //{
+    //    base.OnTriggerEnter2D(collision);
+    //}
+
+    protected override void OnCollisionEnter2D(Collision2D collision)
     {
-        base.OnTriggerEnter2D(collision);
+        base.OnCollisionEnter2D(collision);
     }
+
 }

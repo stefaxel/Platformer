@@ -70,7 +70,7 @@ public class PlayerHealth : MonoBehaviour
 
             transform.position = playerPosition.respawnPlayer;
             
-            playerDeath.SetBool("respawn", true);
+            playerDeath.SetBool("death", false);
             canTakeDamage = true;
         }
     }
@@ -89,7 +89,7 @@ public class PlayerHealth : MonoBehaviour
 
     public void OnDeath()
     {
-        bool triggerDeath = true;
+        //bool triggerDeath = true;
 
         if (currentHealth <= 0)
         {
@@ -100,12 +100,17 @@ public class PlayerHealth : MonoBehaviour
 
             //PlayerDeath();
 
-            if (triggerDeath)
-            {
-                playerDeath.SetTrigger("death");
-                triggerDeath = false;
-            }
-            
+
+            playerDeath.SetBool("death", true);
+            //playerDeath.SetTrigger("death");
+
+            //if (triggerDeath)
+            //{
+            //    playerDeath.SetTrigger("death");
+            //    triggerDeath = false;
+            //    Debug.Log(triggerDeath);
+            //}
+
 
             //SceneManager.LoadScene(SceneManager.GetActiveScene().name);
             //SoundManager.instance.PlaySound(failSound);

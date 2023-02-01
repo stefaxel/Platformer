@@ -67,6 +67,8 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
+        if (UI.isPaused) return;
+
         AppyCoyoteTime();
 
         ApplyFlip();
