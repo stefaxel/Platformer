@@ -23,6 +23,7 @@ public class PlayerHealth : MonoBehaviour
     private Animator playerDeath;
 
     bool deathAnimation = true;
+    bool timeScale1 = true;
 
     private Rigidbody2D rb;
 
@@ -37,6 +38,8 @@ public class PlayerHealth : MonoBehaviour
         playerDeath = GetComponent<Animator>();
 
         rb = GetComponent<Rigidbody2D>();
+
+        //Time.timeScale = 1;
     }
 
     private void Update()
@@ -95,10 +98,12 @@ public class PlayerHealth : MonoBehaviour
 
     private void OnDeath()
     {
+        timeScale1 = false;
         bool triggerDeath = true;
-        if (currentHealth <= 0 && deathAnimation)
+
+        if (currentHealth <= 0 && deathAnimation && !timeScale1)
         {
-            
+            //Time.timeScale = 0;
             canTakeDamage = false;
             rb.bodyType = RigidbodyType2D.Static;
 
@@ -111,17 +116,17 @@ public class PlayerHealth : MonoBehaviour
             
             
         }
-
+        //Time.timeScale = 0;
         triggerDeath = false;
 
     }
 
     public void RestartLevel()
     {
+        Time.timeScale = 0;
         deathAnimation = true;
         ui.PlayerHealth();
+        timeScale1 = true;
     }
-
-    
 
 }

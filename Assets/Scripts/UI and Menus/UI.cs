@@ -158,5 +158,6 @@ public class UI : MonoBehaviour
         timer = 0;
         isPaused = false;
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        Time.timeScale = 1;
     }
 }

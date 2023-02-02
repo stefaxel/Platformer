@@ -62091,8 +62091,8 @@ MonoBehaviour:
     m_ActionName: Player/WallClimb[/Keyboard/shift]
   - m_PersistentCalls:
       m_Calls: []
-    m_ActionId: 0b29a1f0-4e29-49a8-8054-f70e2e85803d
-    m_ActionName: Player/New action
+    m_ActionId: 760172fa-d696-471b-add3-d2c02819b358
+    m_ActionName: UI/Escape[/Keyboard/escape]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: Keyboard&Mouse
   m_DefaultActionMap: Player
@@ -63502,7 +63502,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4623942808014318242, guid: 977e9f56e2c524048b6000aa3888f4d1, type: 3}
       propertyPath: m_IsTrigger
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4623942808014318301, guid: 977e9f56e2c524048b6000aa3888f4d1, type: 3}
       propertyPath: m_RootOrder
@@ -63685,7 +63685,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 5362984118501568640, guid: 6389828a27c51144ab9d99494b88accd, type: 3}
       propertyPath: m_IsTrigger
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5362984118501568642, guid: 6389828a27c51144ab9d99494b88accd, type: 3}
       propertyPath: m_RootOrder

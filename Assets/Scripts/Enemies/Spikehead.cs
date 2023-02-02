@@ -74,10 +74,10 @@ public class Spikehead : DamageScript
 
     //protected virtual void OnCollisionEnter2D(Collider2D collision)
     //{
-            
+
     //}
 
-    protected virtual void OnCollisionEnter2D(Collision2D collision)
+    protected override void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.name == "Player")
         {
