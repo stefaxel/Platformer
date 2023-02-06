@@ -49409,6 +49409,11 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!82 &263775644 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 263775644, guid: 6b72fa14aa3dec541b6b46f38d62249f, type: 3}
+  m_PrefabInstance: {fileID: 7642513886793498433}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &265652724
 GameObject:
   m_ObjectHideFlags: 0
@@ -50616,6 +50621,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 33795ae6a4883004b862433b446bf448, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sfxArray:
+  - {fileID: 263775644}
+  - {fileID: 801538755}
+  - {fileID: 895436792}
+  - {fileID: 2101368827}
 --- !u!82 &700878181
 AudioSource:
   m_ObjectHideFlags: 0
@@ -50637,7 +50647,7 @@ AudioSource:
   Priority: 128
   DopplerLevel: 1
   MinDistance: 1
-  MaxDistance: 20
+  MaxDistance: 5
   Pan2D: 0
   rolloffMode: 0
   BypassEffects: 0
@@ -50856,6 +50866,11 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!82 &801538755 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 819969462, guid: c1970c91847272440a83203e71f98a9e, type: 3}
+  m_PrefabInstance: {fileID: 4410085191848967815}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &817388496
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -51081,6 +51096,11 @@ Transform:
 --- !u!4 &895436791 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4819571369340003281, guid: 2c08183592f1bab488df3d9fd8418d61, type: 3}
+  m_PrefabInstance: {fileID: 4819571370040758194}
+  m_PrefabAsset: {fileID: 0}
+--- !u!82 &895436792 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 895436797, guid: 2c08183592f1bab488df3d9fd8418d61, type: 3}
   m_PrefabInstance: {fileID: 4819571370040758194}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &916143780
@@ -63105,6 +63125,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4808089789006385151, guid: 69de818f46015d3458c44432b2101977, type: 3}
   m_PrefabInstance: {fileID: 4808089788381452293}
   m_PrefabAsset: {fileID: 0}
+--- !u!82 &2101368827 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 2101368827, guid: 69de818f46015d3458c44432b2101977, type: 3}
+  m_PrefabInstance: {fileID: 4808089788381452293}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &2116211322
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -63561,6 +63586,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 252535084}
     m_Modifications:
+    - target: {fileID: 2101368827, guid: 69de818f46015d3458c44432b2101977, type: 3}
+      propertyPath: MaxDistance
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 4808089789006385136, guid: 69de818f46015d3458c44432b2101977, type: 3}
       propertyPath: m_Name
       value: Fire
@@ -63622,6 +63651,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 252535084}
     m_Modifications:
+    - target: {fileID: 895436797, guid: 2c08183592f1bab488df3d9fd8418d61, type: 3}
+      propertyPath: MaxDistance
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 4819571369340003280, guid: 2c08183592f1bab488df3d9fd8418d61, type: 3}
       propertyPath: m_Name
       value: Falling Platform
@@ -63936,6 +63969,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 252535084}
     m_Modifications:
+    - target: {fileID: 263775644, guid: 6b72fa14aa3dec541b6b46f38d62249f, type: 3}
+      propertyPath: m_Volume
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 263775644, guid: 6b72fa14aa3dec541b6b46f38d62249f, type: 3}
+      propertyPath: MaxDistance
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 7642513886378863384, guid: 6b72fa14aa3dec541b6b46f38d62249f, type: 3}
       propertyPath: m_Name
       value: Moving Platform Holder
