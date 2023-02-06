@@ -8,6 +8,7 @@ public class CollectableCherry : MonoBehaviour
     UI ui;
 
     [SerializeField] private AudioClip audioCollectable;
+    //[SerializeField] private AudioSource audioSource;
 
     private void Start()
     {
@@ -20,6 +21,7 @@ public class CollectableCherry : MonoBehaviour
         {
             ui.AddCollectable(cherryPoint);
             SoundManager.instance.PlaySound(audioCollectable);
+            //audioSource.PlayOneShot(audioCollectable, 100);
             Destroy(gameObject);
         }
     }

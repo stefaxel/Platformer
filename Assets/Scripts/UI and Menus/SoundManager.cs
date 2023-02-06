@@ -6,7 +6,10 @@ public class SoundManager : MonoBehaviour
 {
     public static SoundManager instance { get; private set; }
     private AudioSource source;
-    [SerializeField] AudioSource[] sfxArray;
+    [SerializeField] AudioSource[] fanSfx;
+    [SerializeField] AudioSource[] fireSfx;
+    [SerializeField] AudioSource[] platformSfx;
+    [SerializeField] AudioSource levelMusic;
 
     private void Awake()
     {
