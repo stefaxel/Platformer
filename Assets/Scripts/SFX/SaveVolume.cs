@@ -10,14 +10,17 @@ public class SaveVolume : MonoBehaviour
     private float musicVolume;
     private float effectsVolume;
 
+    private AudioSource source;
+
     [SerializeField] AudioSource[] fanSfx;
     [SerializeField] AudioSource[] fireSfx;
     [SerializeField] AudioSource[] platformSfx;
     [SerializeField] AudioSource levelMusic;
 
-
+    
     void Awake()
     {
+        source = GetComponent<AudioSource>();
         ContinueSettings();
     }
 
@@ -26,6 +29,8 @@ public class SaveVolume : MonoBehaviour
         musicVolume = PlayerPrefs.GetFloat(musicPref);
 
         effectsVolume = PlayerPrefs.GetFloat(effectsPref);
+
+        source.volume = PlayerPrefs.GetFloat(effectsPref);
 
         levelMusic.volume = musicVolume;
 
