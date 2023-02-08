@@ -11,6 +11,7 @@ public class FireTrap : DamageScript
     private bool isActive;
     private bool fireIsActive = false;
     private bool canTakeDamage;
+    private bool animationActive = false;
 
     private Animator fireAnimation;
 
@@ -25,17 +26,21 @@ public class FireTrap : DamageScript
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
-        if(!fireIsActive)
+        if (!fireIsActive)
             StartCoroutine(FireTrapTrigger());
     }
 
     private IEnumerator FireTrapTrigger()
-    { 
+    {
         if(!isActive)
         {
-            fireAnimation.SetBool("fire active", false);
+            if (animationActive)
+            {
+                fireAnimation.SetBool("fire active", false);
+                animationActive = false;
+            }   
             canTakeDamage = false;
             yield return new WaitForSeconds(offTime);
             fireIsActive = true;
@@ -48,7 +53,12 @@ public class FireTrap : DamageScript
 
         if(isActive)
         {
-            fireAnimation.SetBool("fire active", true);
+            if (!animationActive)
+            {
+                fireAnimation.SetBool("fire active", true);
+                animationActive = true;
+            }
+            
             //SoundManager.instance.PlaySound(fireAudio);
             canTakeDamage = true;
             yield return new WaitForSeconds(onTime);
