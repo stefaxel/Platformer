@@ -174,9 +174,9 @@ MonoBehaviour:
   damage: 1
   speed: 2
   sightRange: 5
-  attackDelay: 1
+  attackDelay: 1.5
   playerLayer:
     serializedVersion: 2
     m_Bits: 128
-  enemyHealth: 2
+  enemyHealth: 5
   audioImpact: {fileID: 8300000, guid: c1321952f60d47745a4e337c7dcc977a, type: 3}

@@ -9,6 +9,9 @@ TagManager:
   - UI
   - Ground
   - Wall
+  - Door
+  - Background
+  - Spikes
   layers:
   - Default
   - TransparentFX

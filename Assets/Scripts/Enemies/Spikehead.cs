@@ -39,6 +39,7 @@ public class Spikehead : DamageScript
 
         if(enemyHealth <= 0)
             Destroy(gameObject);
+
     }
 
     protected virtual void CheckForPlayer()
@@ -85,10 +86,14 @@ public class Spikehead : DamageScript
             SoundManager.instance.PlaySound(audioImpact);
             StopAttacking();
         }
-        if (collision.gameObject.name == "Wall" || collision.gameObject.name == "Ground")
+        if (collision.gameObject.name == "Wall" || collision.gameObject.name == "Ground" || collision.tag == "Spikes")
         {
+            StopAttacking();
             enemyHealth--;
             SoundManager.instance.PlaySound(audioImpact);
+        }
+        if(collision.tag == "Door" || collision.tag == "Background")
+        {
             StopAttacking();
         }
     }
