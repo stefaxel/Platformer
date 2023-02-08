@@ -49,7 +49,7 @@ public class PlayerHealth : MonoBehaviour
         if(deathAnimation)
             OnDeath();
 
-        Debug.Log(deathAnimation);
+        //Debug.Log(deathAnimation);
     }
 
     public void TakeDamage(int damage)
