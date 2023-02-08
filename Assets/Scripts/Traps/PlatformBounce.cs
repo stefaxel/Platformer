@@ -30,7 +30,7 @@ public class PlatformBounce : MonoBehaviour
                 bounceAnimation = false;
             }
             //bounceAnimator.SetTrigger("bounce");
-            collision.rigidbody.AddForce(Vector2.up * upwardsForce, ForceMode2D.Impulse);
+            collision.rigidbody.AddForce(transform.up * upwardsForce, ForceMode2D.Impulse);
         }
     }
 }
