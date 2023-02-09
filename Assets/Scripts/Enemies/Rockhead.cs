@@ -25,6 +25,11 @@ public class Rockhead : Spikehead
         base.CheckForPlayer();
     }
 
+    protected override void OnDeath()
+    {
+        base.OnDeath();
+    }
+
     protected override void CalculateAttackDirection()
     {
         base.CalculateAttackDirection();

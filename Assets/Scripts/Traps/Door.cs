@@ -6,12 +6,7 @@ public class Door : MonoBehaviour
 {
     [SerializeField] GameObject door;
     [SerializeField] GameObject resetDoor;
-    [SerializeField] GameObject[] enemy;
-
-    private List<Spikehead> spikehead;
-
-    //[SerializeField] Collider2D doorReset;
-    //[SerializeField] Collider2D doorClose;
+    
     [SerializeField] bool oneWayDoor;
 
     // Start is called before the first frame update
@@ -23,7 +18,7 @@ public class Door : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        NumberOfEnemies();
+        
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -46,11 +41,5 @@ public class Door : MonoBehaviour
         } 
     }
 
-    private void NumberOfEnemies()
-    {
-        if (enemy.Length <= 0)
-        {
-            Debug.Log("Open a door");
-        }
-    }
+  
 }

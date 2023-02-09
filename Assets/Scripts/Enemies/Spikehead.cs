@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Timeline;
 
 public class Spikehead : DamageScript
 {
@@ -14,6 +15,8 @@ public class Spikehead : DamageScript
     [SerializeField] protected float enemyHealth;
     protected float attackTimer;
     protected Vector3 destination;
+    [SerializeField] protected SignalAsset roomSignal;
+    
 
     protected bool isAttacking;
 
@@ -37,8 +40,9 @@ public class Spikehead : DamageScript
                 CheckForPlayer();
         }
 
-        if(enemyHealth <= 0)
-            Destroy(gameObject);
+        OnDeath();
+        //if(enemyHealth <= 0)
+        //    Destroy(gameObject);
 
     }
 
@@ -73,10 +77,15 @@ public class Spikehead : DamageScript
         isAttacking = false;
     }
 
-    //protected virtual void OnCollisionEnter2D(Collider2D collision)
-    //{
-
-    //}
+    protected virtual void OnDeath()
+    {
+        if(enemyHealth <= 0)
+        {
+            roomSignal.Equals(true);
+            //roomSignal == true;
+            this.gameObject.SetActive(false);
+        }
+    }
 
     protected override void OnTriggerEnter2D(Collider2D collision)
     {
