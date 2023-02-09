@@ -174,9 +174,10 @@ MonoBehaviour:
   damage: 2
   speed: 3
   sightRange: 4
-  attackDelay: 0.5
+  attackDelay: 0.75
   playerLayer:
     serializedVersion: 2
     m_Bits: 128
   enemyHealth: 4
+  roomSignal: {fileID: 11400000, guid: 0b6196bf536c5d744846870d6f3e75bf, type: 2}
   audioImpact: {fileID: 8300000, guid: c1321952f60d47745a4e337c7dcc977a, type: 3}
