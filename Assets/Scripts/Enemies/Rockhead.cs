@@ -47,6 +47,13 @@ public class Rockhead : Spikehead
     protected override void OnTriggerEnter2D(Collider2D collision)
     {
         base.OnTriggerEnter2D(collision);
+
+        if(collision.tag == "Spike Enemy")
+        {
+            enemyHealth--;
+            StopAttacking();
+            SoundManager.instance.PlaySound(audioImpact);
+        }
     }
 
 }

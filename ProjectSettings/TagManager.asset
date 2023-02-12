@@ -12,6 +12,7 @@ TagManager:
   - Door
   - Background
   - Spikes
+  - Spike Enemy
   layers:
   - Default
   - TransparentFX
