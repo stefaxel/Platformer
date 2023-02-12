@@ -53,7 +53,6 @@ public class UI : MonoBehaviour
 
     private void Update()
     {
-        //PlayerHealth();
         LevelTime();
     }
 
