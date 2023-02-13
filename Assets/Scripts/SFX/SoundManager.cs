@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -22,6 +23,11 @@ public class SoundManager : MonoBehaviour
     [SerializeField] AudioSource[] platformSfx;
     [SerializeField] AudioSource levelMusic;
 
+    [SerializeField] TextMeshProUGUI musicText;
+    [SerializeField] TextMeshProUGUI effectsText;
+    //[SerializeField] GameObject musicDisplay;
+    //[SerializeField] GameObject effectDisplay;
+
     void Start()
     {
         firstStartUpInt = PlayerPrefs.GetInt(firstStartUp);
@@ -34,6 +40,9 @@ public class SoundManager : MonoBehaviour
             musicSlider.value = musicVolume;
             effectsSlider.value = effectsVolume;
 
+            musicText.text = musicVolume.ToString("0") + ": Music Volume";
+            effectsText.text = effectsVolume.ToString("0") + ": Effects Volume";
+
             PlayerPrefs.SetFloat(musicPref, musicVolume);
             PlayerPrefs.SetFloat(effectsPref, effectsVolume);
             PlayerPrefs.SetInt(firstStartUp, -1);
@@ -45,6 +54,9 @@ public class SoundManager : MonoBehaviour
 
             effectsVolume = PlayerPrefs.GetFloat(effectsPref);
             effectsSlider.value = effectsVolume;
+
+            musicText.text = musicVolume.ToString("0") + ": Music Volume";
+            effectsText.text = effectsVolume.ToString("0") + ": Effects Volume";
         }
     }
 
@@ -63,6 +75,23 @@ public class SoundManager : MonoBehaviour
             Destroy(gameObject);
         }
         
+    }
+
+    private void Update()
+    {
+        UpdateSoundText();
+    }
+
+    private void UpdateSoundText()
+    {
+        float correctedVolumeMusic;
+        float correctedVolumeEffect;
+
+        correctedVolumeMusic = musicSlider.value * 100;
+        correctedVolumeEffect = effectsSlider.value * 100;
+
+        musicText.text = correctedVolumeMusic.ToString("0") + ": Music Volume";
+        effectsText.text = correctedVolumeEffect.ToString("0") + ": Effects Volume";
     }
 
     public void PlaySound(AudioClip _sound)

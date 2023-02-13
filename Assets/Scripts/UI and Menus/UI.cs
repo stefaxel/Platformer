@@ -15,8 +15,10 @@ public class UI : MonoBehaviour
     [SerializeField] GameObject cherryCounter;
     [SerializeField] GameObject timeCounter;
     [SerializeField] GameObject pauseUI;
+    [SerializeField] GameObject volumeUI;
 
     public static bool isPaused = false;
+    private bool volumeWIndowOpen = false;
 
     PlayerHealth playerHealth;
 
@@ -40,7 +42,7 @@ public class UI : MonoBehaviour
 
     private void DeterminePause()
     {
-        if (isPaused)
+        if (isPaused && !volumeWIndowOpen)
             DeactivateMenu();
         else
             ActivateMenu();
@@ -158,5 +160,25 @@ public class UI : MonoBehaviour
         isPaused = false;
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         Time.timeScale = 1;
+    }
+
+    public void VolumeButton()
+    {
+        volumeUI.SetActive(true);
+        volumeWIndowOpen = true;
+    }
+
+    public void VolumeCloseButton()
+    {
+        volumeWIndowOpen = false;
+        volumeUI.SetActive(false);
+    }
+
+    public void QuitGame()
+    {
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#endif
+        Application.Quit();
     }
 }
