@@ -20,6 +20,8 @@ public class UI : MonoBehaviour
     public static bool isPaused = false;
     private bool volumeWIndowOpen = false;
 
+    [SerializeField] private CherryScoreSO scoreSO;
+
     PlayerHealth playerHealth;
 
     PauseAction action;
@@ -33,7 +35,7 @@ public class UI : MonoBehaviour
 
     private void Start()
     {
-        numOfCherries = 0;
+        numOfCherries = scoreSO.Value;
         playerHealth = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerHealth>();
         cherryText.text = "Cherry: " + numOfCherries.ToString();
 
@@ -89,7 +91,8 @@ public class UI : MonoBehaviour
     public void AddCollectable(int collectable)
     {
         numOfCherries = numOfCherries + collectable;
-        cherryText.text = "Cherry: " + numOfCherries.ToString();
+        scoreSO.Value = numOfCherries;
+        cherryText.text = "Cherry: " + scoreSO.Value.ToString();
     }
 
     public void PlayerHealth()
