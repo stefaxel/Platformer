@@ -10,4 +10,9 @@ public class ButtonSFX : MonoBehaviour
     {
         SoundManager.instance.PlaySound(buttonAudio);
     }
+
+    public void OnButtonPressMenu()
+    {
+        SaveVolume.instance.PlaySound(buttonAudio);
+    }
 }

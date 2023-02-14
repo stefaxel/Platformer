@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class SaveVolume : MonoBehaviour
 {
+    public static SaveVolume instance { get; private set; }
     private static readonly string musicPref = "MusicPref";
     private static readonly string effectsPref = "EffectsPref";
 
@@ -20,8 +21,14 @@ public class SaveVolume : MonoBehaviour
     
     void Awake()
     {
+        instance = this;
         source = GetComponent<AudioSource>();
         ContinueSettings();
+    }
+
+    public void PlaySound(AudioClip _sound)
+    {
+        source.PlayOneShot(_sound);
     }
 
     private void ContinueSettings()
