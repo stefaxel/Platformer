@@ -135,6 +135,7 @@ public class UI : MonoBehaviour
         timeCounter.SetActive(true);
         respawnPressed = false;
         numOfCherries = numOfCherries - 5;
+        scoreSO.Value = numOfCherries;
         isPaused = false;
         cherryText.text = "Cherry: " + numOfCherries.ToString();
     }
@@ -159,6 +160,8 @@ public class UI : MonoBehaviour
 
     public void RestartLevel()
     {
+        numOfCherries = 0;
+        scoreSO.Value = numOfCherries;
         timer = 0;
         isPaused = false;
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);

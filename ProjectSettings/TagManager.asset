@@ -13,6 +13,7 @@ TagManager:
   - Background
   - Spikes
   - Spike Enemy
+  - Destroy Enemy
   layers:
   - Default
   - TransparentFX

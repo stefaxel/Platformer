@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Timeline;
+using static UnityEngine.EventSystems.EventTrigger;
 
 public class Spikehead : DamageScript
 {
@@ -104,6 +105,10 @@ public class Spikehead : DamageScript
         if(collision.tag == "Door" || collision.tag == "Background")
         {
             StopAttacking();
+        }
+        if(collision.tag == "Destroy Enemy")
+        {
+            this.gameObject.SetActive(false);
         }
     }
 }
