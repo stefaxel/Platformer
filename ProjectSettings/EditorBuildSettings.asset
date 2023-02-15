@@ -12,9 +12,6 @@ EditorBuildSettings:
     path: Assets/Scenes/Controls.unity
     guid: 266d4b97ab992a748bb013adf9cb1360
   - enabled: 1
-    path: Assets/Scenes/Volume.unity
-    guid: 1651ddf5069658441b53a10e27556855
-  - enabled: 1
     path: Assets/Scenes/Level 1.unity
     guid: 8c9cfa26abfee488c85f1582747f6a02
   - enabled: 1
@@ -26,4 +23,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Level 4.unity
     guid: 1e2423853cb18324684baf210f2cd296
+  - enabled: 1
+    path: Assets/Scenes/End Screen.unity
+    guid: 1651ddf5069658441b53a10e27556855
   m_configObjects: {}

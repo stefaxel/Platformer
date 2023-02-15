@@ -14,7 +14,7 @@ public class MainMenuUI : MonoBehaviour
 
     private void OnClickStartEffect()
     {
-        SceneManager.LoadScene(3);
+        SceneManager.LoadScene(2);
     }
 
     public void OnClickControls()
