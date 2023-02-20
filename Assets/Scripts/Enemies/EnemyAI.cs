@@ -16,7 +16,8 @@ public class EnemyAI : MonoBehaviour
 
     [Header("Enemy Pathfind Params")]
     [SerializeField] private float speed;
-    [SerializeField] private float nextWaypointDistance;
+    [SerializeField] private Vector2 nextWaypointDistance;
+    private float nextWaypointFloat;
     [SerializeField] private LayerMask whatIsPlayer;
     private int currentWaypoint = 0;
     [SerializeField] private float sightRange;
@@ -56,6 +57,8 @@ public class EnemyAI : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
 
         InvokeRepeating("UpdatePath", 0f, 0.5f);
+
+        nextWaypointFloat = nextWaypointDistance.x/2.5f;
         //StartCoroutine(PlayerDetection());
     }
 
@@ -90,7 +93,8 @@ public class EnemyAI : MonoBehaviour
     private void AIChecks()
     {
         playerInSight = Physics2D.OverlapCircle(transform.position, sightRange, whatIsPlayer);
-        playerInAttack = Physics2D.OverlapCircle(transform.position, nextWaypointDistance, whatIsPlayer);
+        playerInAttack = Physics2D.OverlapBox(transform.position, nextWaypointDistance, 0, whatIsPlayer);
+        //playerInAttack = Physics2D.OverlapCircle(transform.position, nextWaypointDistance, whatIsPlayer);
         //inAttackRange = Physics2D.OverlapBox((Vector2)attackDetection.position + detectorOffset, detectorSize, 0, whatIsPlayer);
 
         if (!playerInSight && !playerInAttack)
@@ -132,7 +136,7 @@ public class EnemyAI : MonoBehaviour
             // If you want maximum performance you can check the squared distance instead to get rid of a
             // square root calculation. But that is outside the scope of this tutorial.
             distanceToWaypoint = Vector3.Distance(transform.position, path.vectorPath[currentWaypoint]);
-            if (distanceToWaypoint < nextWaypointDistance)
+            if (distanceToWaypoint < nextWaypointFloat)
             {
                 // Check if there is another waypoint or if we have reached the end of the path
                 if (currentWaypoint + 1 < path.vectorPath.Count)
@@ -155,7 +159,7 @@ public class EnemyAI : MonoBehaviour
 
         // Slow down smoothly upon approaching the end of the path
         // This value will smoothly go from 1 to 0 as the agent approaches the last waypoint in the path.
-        var speedFactor = reachedEndOfPath ? Mathf.Sqrt(distanceToWaypoint / nextWaypointDistance) : 1f;
+        var speedFactor = reachedEndOfPath ? Mathf.Sqrt(distanceToWaypoint / nextWaypointFloat) : 1f;
 
         Vector3 dir = ((Vector2)path.vectorPath[currentWaypoint] - rb.position).normalized;
         Vector3 force = dir * speed * speedFactor * Time.deltaTime;
@@ -226,7 +230,7 @@ public class EnemyAI : MonoBehaviour
         if (showGizmos)
         {
             Gizmos.color = gizmoColor;
-            Gizmos.DrawSphere(transform.position, nextWaypointDistance);
+            Gizmos.DrawSphere(transform.position, nextWaypointFloat);
         }
         if (showAttackGizmo)
         {
@@ -241,12 +245,13 @@ public class EnemyAI : MonoBehaviour
     public void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, nextWaypointDistance);
+        Gizmos.DrawWireSphere(transform.position, nextWaypointFloat);
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(transform.position, sightRange);
         Gizmos.color = Color.blue;
-        Gizmos.DrawWireSphere(transform.position, nextWaypointDistance);
-
+        Gizmos.DrawWireSphere(transform.position, nextWaypointFloat);
+        Gizmos.color = Color.cyan;
+        Gizmos.DrawWireCube(transform.position, nextWaypointDistance);
         
     }
 }
