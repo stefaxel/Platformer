@@ -4,34 +4,51 @@ using UnityEngine;
 using Pathfinding;
 using UnityEngine.InputSystem.XR;
 using UnityEditor.Tilemaps;
+using System;
 
 public class EnemyAI : MonoBehaviour
 {
+    [Header("Pathfind references")]
     [SerializeField] private Transform targetPosition;
-
     private Seeker seeker;
     private Rigidbody2D rb;
-
     public Path path;
+
+    [Header("Enemy Pathfind Params")]
     [SerializeField] private float speed;
     [SerializeField] private float nextWaypointDistance;
     [SerializeField] private LayerMask whatIsPlayer;
     private int currentWaypoint = 0;
-
     [SerializeField] private float sightRange;
     //[SerializeField] private float attackRange;
     public bool playerInSight;
     public bool playerInAttack;
 
+    [Header("Gizmos")]
     public Color gizmoColor = Color.green;
+    public Color attackGizmo = Color.red;
     public bool showGizmos = true;
+    public bool showAttackGizmo = true;
 
-    private bool movingRight = true;
+    [Header("Patrol Settings")]
     [SerializeField] private Transform groundDetection;
     [SerializeField] private float rayDistance;
     [SerializeField] private float patrolSpeed;
 
+    [Header("Attack Settings")]
+    [SerializeField] private Transform attackDetection;
+    [SerializeField] private Transform attackPoint;
+    //private bool inAttackRange;
+    [SerializeField] private Vector2 detectorSize;
+    [SerializeField] private Vector2 detectorOffset;
+    [SerializeField] private Vector2 attackPointSize;
+    [SerializeField] private Vector2 attackPointOffset;
+    [SerializeField] private float attackSpeed;
+    [SerializeField] private float detectionDelay;
+
     private bool reachedEndOfPath;
+    public bool facingRight = true;
+    public bool playerEncountered = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -39,7 +56,15 @@ public class EnemyAI : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
 
         InvokeRepeating("UpdatePath", 0f, 0.5f);
+        //StartCoroutine(PlayerDetection());
     }
+
+    //IEnumerator PlayerDetection()
+    //{
+    //    yield return new WaitForSeconds(detectionDelay);
+    //    AttackPlayer();
+    //    StartCoroutine(PlayerDetection());
+    //}
 
     void UpdatePath()
     {
@@ -66,6 +91,7 @@ public class EnemyAI : MonoBehaviour
     {
         playerInSight = Physics2D.OverlapCircle(transform.position, sightRange, whatIsPlayer);
         playerInAttack = Physics2D.OverlapCircle(transform.position, nextWaypointDistance, whatIsPlayer);
+        //inAttackRange = Physics2D.OverlapBox((Vector2)attackDetection.position + detectorOffset, detectorSize, 0, whatIsPlayer);
 
         if (!playerInSight && !playerInAttack)
             Patrol();
@@ -85,6 +111,9 @@ public class EnemyAI : MonoBehaviour
         RaycastHit2D isGround = Physics2D.Raycast(groundDetection.position, Vector2.down, rayDistance);
 
         if (!isGround.collider)
+            Flip();
+
+        if (playerEncountered && !playerInSight)
             Flip();
         
     }
@@ -132,33 +161,80 @@ public class EnemyAI : MonoBehaviour
         Vector3 force = dir * speed * speedFactor * Time.deltaTime;
 
         rb.AddForce(force);
-
-        //float distance = Vector2.Distance(rb.position, path.vectorPath[currentWaypoint]);
-
-        //if (distance < nextWaypointDistance)
-        //{
-        //    currentWaypoint++;
-        //}
     }
 
     private void AttackPlayer()
     {
+        Collider2D collider = Physics2D.OverlapBox((Vector2)attackDetection.position + detectorOffset, detectorSize, 0, whatIsPlayer);
+        float distance;
+
+        Flip();
+
+        if (collider != null)
+        {
+            distance = Vector2.Distance(transform.position, targetPosition.position);
+            Vector2 direction = targetPosition.position - transform.position;
+            Vector3 force = direction * attackSpeed * Time.deltaTime;
+
+            rb.AddForce(force);
+            
+            Collider2D attackCollider = Physics2D.OverlapBox((Vector2)attackPoint.position + detectorOffset, attackPointSize, 0, whatIsPlayer);
+            if (attackCollider != null)
+            {
+                attackCollider.gameObject.GetComponent<PlayerHealth>().TakeDamage(1);
+            }
+        }
+        else
+        {
+            Debug.Log("not in range");
+        }
 
     }
 
     private void Flip()
     {
-        transform.localScale = new Vector2(transform.localScale.x * -1, transform.localScale.y);
-        patrolSpeed *= -1;
+        bool wasFacingRight = facingRight;
 
+        if (!playerInSight)
+        {
+            transform.localScale = new Vector2(transform.localScale.x * -1, transform.localScale.y);
+            patrolSpeed *= -1;
+            facingRight = !facingRight; 
+        }
+
+        if (!wasFacingRight && playerEncountered)
+        {
+            transform.localScale = new Vector2(transform.localScale.x * -1, transform.localScale.y);
+            playerEncountered = false;
+        }
+
+        if (playerInSight || playerInAttack)
+        {
+            playerEncountered = true;
+            if (targetPosition.position.x > rb.position.x && transform.localScale.x < 0 ||
+                targetPosition.position.x < rb.position.x && transform.localScale.x > 0)
+            {
+                transform.localScale = new Vector2(transform.localScale.x * -1, transform.localScale.y);
+                facingRight = !facingRight;
+            }
+                
+        }
     }
 
     private void OnDrawGizmos()
     {
-        if(showGizmos)
+        if (showGizmos)
         {
             Gizmos.color = gizmoColor;
             Gizmos.DrawSphere(transform.position, nextWaypointDistance);
+        }
+        if (showAttackGizmo)
+        {
+            Gizmos.color = Color.red;
+            Gizmos.DrawWireCube(attackDetection.position, detectorSize);
+
+            Gizmos.color = Color.magenta;
+            Gizmos.DrawWireCube(attackPoint.position, attackPointSize);
         }
     }
 
@@ -170,5 +246,7 @@ public class EnemyAI : MonoBehaviour
         Gizmos.DrawWireSphere(transform.position, sightRange);
         Gizmos.color = Color.blue;
         Gizmos.DrawWireSphere(transform.position, nextWaypointDistance);
+
+        
     }
 }
