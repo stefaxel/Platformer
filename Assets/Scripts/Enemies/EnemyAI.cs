@@ -39,13 +39,13 @@ public class EnemyAI : MonoBehaviour
 
     [Header("Attack Settings")]
     [SerializeField] protected Transform attackDetection;
-    [SerializeField] protected Transform attackPoint;
+    [SerializeField] private Transform attackPoint;
     //private bool inAtotectedange;
     [SerializeField] protected Vector2 detectorSize;
     [SerializeField] protected Vector2 detectorOffset;
-    [SerializeField] protected Vector2 attackPointSize;
-    [SerializeField] protected Vector2 attackPointOffset;
-    [SerializeField] protected float attackSpeed;
+    [SerializeField] private Vector2 attackPointSize;
+    [SerializeField] private Vector2 attackPointOffset;
+    [SerializeField] private float attackSpeed;
     [SerializeField] protected float detectionDelay;
 
     [Header("Jump Settings")]
