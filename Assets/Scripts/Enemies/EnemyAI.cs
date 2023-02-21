@@ -9,21 +9,21 @@ using System;
 public class EnemyAI : MonoBehaviour
 {
     [Header("Pathfind references")]
-    [SerializeField] private Transform targetPosition;
-    private Seeker seeker;
-    private Rigidbody2D rb;
+    [SerializeField] protected Transform targetPosition;
+    protected Seeker seeker;
+    protected Rigidbody2D rb;
     public Path path;
 
     [Header("Enemy Pathfind Params")]
-    [SerializeField] private float speed;
-    [SerializeField] private Vector2 nextWaypointDistance;
-    [SerializeField]private float nextWaypointFloat;
-    [SerializeField] private LayerMask whatIsPlayer;
-    private int currentWaypoint = 0;
-    [SerializeField] private float sightRange;
+    [SerializeField] protected float speed;
+    [SerializeField] protected Vector2 nextWaypointDistance;
+    [SerializeField]protected float nextWaypointFloat;
+    [SerializeField] protected LayerMask whatIsPlayer;
+    protected int currentWaypoint = 0;
+    [SerializeField] protected float sightRange;
     //[SerializeField] private float attackRange;
-    public bool playerInSight;
-    public bool playerInAttack;
+    protected bool playerInSight;
+    protected bool playerInAttack;
 
     [Header("Gizmos")]
     public Color gizmoColor = Color.green;
@@ -32,42 +32,42 @@ public class EnemyAI : MonoBehaviour
     public bool showAttackGizmo = true;
 
     [Header("Patrol Settings")]
-    [SerializeField] private Transform groundDetection;
-    [SerializeField] private float rayDistance;
-    [SerializeField] private float patrolSpeed;
-    public bool isGoingRight = true;
+    [SerializeField] protected Transform groundDetection;
+    [SerializeField] protected float rayDistance;
+    [SerializeField] protected float patrolSpeed;
+    protected bool isGoingRight = true;
 
     [Header("Attack Settings")]
-    [SerializeField] private Transform attackDetection;
-    [SerializeField] private Transform attackPoint;
-    //private bool inAttackRange;
-    [SerializeField] private Vector2 detectorSize;
-    [SerializeField] private Vector2 detectorOffset;
-    [SerializeField] private Vector2 attackPointSize;
-    [SerializeField] private Vector2 attackPointOffset;
-    [SerializeField] private float attackSpeed;
-    [SerializeField] private float detectionDelay;
+    [SerializeField] protected Transform attackDetection;
+    [SerializeField] protected Transform attackPoint;
+    //private bool inAtotectedange;
+    [SerializeField] protected Vector2 detectorSize;
+    [SerializeField] protected Vector2 detectorOffset;
+    [SerializeField] protected Vector2 attackPointSize;
+    [SerializeField] protected Vector2 attackPointOffset;
+    [SerializeField] protected float attackSpeed;
+    [SerializeField] protected float detectionDelay;
 
     [Header("Jump Settings")]
-    [SerializeField] private Transform jumpDetectorPlayer;
-    [SerializeField] private float jumpForce;
-    [SerializeField] private Vector2 jumpDetectorSize;
-    [SerializeField] private Vector2 jumpDetectorOffset;
-    private bool playerHasJumped;
-    private bool isEnemyonGround;
-    [SerializeField] private LayerMask whatIsGround;
-    [SerializeField] private float rayDistanceJump;
-    private bool hasPlayerJumped;
-    [SerializeField] private float jumpDelay;
-    private float jumpTimer;
+    [SerializeField] protected Transform jumpDetectorPlayer;
+    [SerializeField] protected float jumpForce;
+    [SerializeField] protected Vector2 jumpDetectorSize;
+    [SerializeField] protected Vector2 jumpDetectorOffset;
+    protected bool playerHasJumped;
+    protected bool isEnemyonGround;
+    [SerializeField] protected LayerMask whatIsGround;
+    [SerializeField] protected float rayDistanceJump;
+    protected bool hasPlayerJumped;
+    [SerializeField] protected float jumpDelay;
+    protected float jumpTimer;
 
 
-    private bool reachedEndOfPath;
-    public bool facingRight = true;
-    public bool playerEncountered = false;
-    public bool wasFacingRight;
+    protected bool reachedEndOfPath;
+    protected bool facingRight = true;
+    protected bool playerEncountered = false;
+    protected bool wasFacingRight;
     // Start is called before the first frame update
-    void Start()
+    protected virtual void Start()
     {
         seeker = GetComponent<Seeker>();
         rb = GetComponent<Rigidbody2D>();
@@ -85,13 +85,13 @@ public class EnemyAI : MonoBehaviour
     //    StartCoroutine(PlayerDetection());
     //}
 
-    void UpdatePath()
+    protected virtual void UpdatePath()
     {
         if(seeker.IsDone())
             seeker.StartPath(rb.position, targetPosition.position, OnPathComplete);
     }
 
-    void OnPathComplete(Path p)
+    protected virtual void OnPathComplete(Path p)
     {
         if (!p.error)
         {
@@ -101,12 +101,12 @@ public class EnemyAI : MonoBehaviour
     }
 
     // Update is called once per frame
-    void FixedUpdate()
+    protected virtual void FixedUpdate()
     {
         AIChecks();
     }
 
-    private void AIChecks()
+    protected virtual void AIChecks()
     {
         playerInSight = Physics2D.OverlapCircle(transform.position, sightRange, whatIsPlayer);
         playerInAttack = Physics2D.OverlapBox(transform.position, nextWaypointDistance, 0, whatIsPlayer);
@@ -137,7 +137,7 @@ public class EnemyAI : MonoBehaviour
         
     }
 
-    private void Patrol()
+    protected virtual void Patrol()
     {
         if (playerEncountered && !playerInSight)
             Flip();
@@ -149,7 +149,7 @@ public class EnemyAI : MonoBehaviour
             Flip(); 
     }
 
-    private void ChasePlayer()
+    protected virtual void ChasePlayer()
     {
         if (path == null)
             return;
@@ -194,7 +194,7 @@ public class EnemyAI : MonoBehaviour
         rb.AddForce(force);
     }
 
-    private void EnemyJump()
+    protected virtual void EnemyJump()
     {
         jumpTimer += Time.deltaTime;
         if(jumpTimer > jumpDelay)
@@ -210,7 +210,7 @@ public class EnemyAI : MonoBehaviour
 
     }
 
-    private void AttackPlayer()
+    protected virtual void AttackPlayer()
     {
         Collider2D collider = Physics2D.OverlapBox((Vector2)attackDetection.position + detectorOffset, detectorSize, 0, whatIsPlayer);
         float distance;
@@ -238,7 +238,7 @@ public class EnemyAI : MonoBehaviour
 
     }
 
-    private void Flip()
+    protected virtual void Flip()
     {
         wasFacingRight = facingRight;
 
@@ -274,13 +274,13 @@ public class EnemyAI : MonoBehaviour
 
     }
 
-    private bool IsGrounded()
+    protected virtual bool IsGrounded()
     {
         isEnemyonGround = Physics2D.Raycast(transform.position, Vector2.down, rayDistanceJump, whatIsGround.value);
         return isEnemyonGround;
     }
 
-    private void OnDrawGizmos()
+    protected virtual void OnDrawGizmos()
     {
         if (showGizmos)
         {
@@ -297,7 +297,7 @@ public class EnemyAI : MonoBehaviour
         }
     }
 
-    public void OnDrawGizmosSelected()
+    protected virtual void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, nextWaypointFloat);
