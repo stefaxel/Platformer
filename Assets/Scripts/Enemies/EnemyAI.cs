@@ -55,6 +55,16 @@ public class EnemyAI : MonoBehaviour
     [SerializeField] protected Vector2 jumpDetectorOffset;
     protected bool playerHasJumped;
     protected bool isEnemyonGround;
+    protected bool playerIsAbove;
+    [SerializeField] protected Vector2 playerAboveJumpSize;
+    [SerializeField] protected Transform playerAboveTransform;
+    protected bool playerIsBelow;
+    [SerializeField] protected Vector2 playerBelowJumpSize;
+    [SerializeField] protected Transform playerBelowTransform;
+    [SerializeField] protected Transform groundInFront;
+    [SerializeField] protected Vector2 groundInFrontSize;
+    protected bool isGroundInFront;
+    [SerializeField] protected LayerMask whatIsInFront;
     [SerializeField] protected LayerMask whatIsGround;
     [SerializeField] protected float rayDistanceJump;
     protected bool hasPlayerJumped;
@@ -112,8 +122,9 @@ public class EnemyAI : MonoBehaviour
         playerInAttack = Physics2D.OverlapBox(transform.position, nextWaypointDistance, 0, whatIsPlayer);
 
         playerHasJumped = Physics2D.OverlapBox(jumpDetectorPlayer.position, jumpDetectorSize, 0, whatIsPlayer);
-        //playerInAttack = Physics2D.OverlapCircle(transform.position, nextWaypointDistance, whatIsPlayer);
-        //inAttackRange = Physics2D.OverlapBox((Vector2)attackDetection.position + detectorOffset, detectorSize, 0, whatIsPlayer);
+        playerIsAbove = Physics2D.OverlapBox(playerAboveTransform.position, playerAboveJumpSize, 0, whatIsPlayer);
+        playerIsBelow = Physics2D.OverlapBox(playerBelowTransform.position, playerBelowJumpSize, 0, whatIsPlayer);
+        isGroundInFront = Physics2D.OverlapBox(groundInFront.position, groundInFrontSize, 0, whatIsInFront);
 
         if (!playerInSight && !playerInAttack)
             Patrol();
@@ -134,7 +145,16 @@ public class EnemyAI : MonoBehaviour
 
         if (playerInSight && playerHasJumped)
             EnemyJump();
-        
+
+        if (playerIsAbove && IsGrounded())
+            EnemyJump();
+
+        if (playerIsBelow && IsGrounded())
+            EnemyJump();
+
+        if (isGroundInFront)
+            EnemyJump();
+
     }
 
     protected virtual void Patrol()
@@ -196,17 +216,27 @@ public class EnemyAI : MonoBehaviour
 
     protected virtual void EnemyJump()
     {
+        RaycastHit2D isGround = Physics2D.Raycast(transform.position, Vector2.down, rayDistance);
+
         jumpTimer += Time.deltaTime;
         if(jumpTimer > jumpDelay)
             rb.AddForce(Vector2.up * jumpForce);
 
-        //if (IsGrounded())
-        //{
-        Debug.Log("player has jumped");
-            
+        if (playerIsAbove)
+        {
+            rb.AddForce(Vector2.up * jumpForce);
+        }
+
+        if (playerIsBelow && !isGround.collider)
+        {
+            rb.AddForce(Vector2.up * 50f);
+        }
+
+        if (isGroundInFront)
+            rb.AddForce(Vector2.up * 150f);
 
         Flip();
-        //}
+        
 
     }
 
@@ -286,6 +316,9 @@ public class EnemyAI : MonoBehaviour
         {
             Gizmos.color = gizmoColor;
             Gizmos.DrawSphere(transform.position, nextWaypointFloat);
+
+            Gizmos.color = gizmoColor;
+            Gizmos.DrawSphere(transform.position, nextWaypointFloat);
         }
         if (showAttackGizmo)
         {
@@ -294,6 +327,9 @@ public class EnemyAI : MonoBehaviour
 
             Gizmos.color = Color.magenta;
             Gizmos.DrawWireCube(attackPoint.position, attackPointSize);
+
+            Gizmos.color = Color.red;
+            Gizmos.DrawWireCube(attackDetection.position, detectorSize);
         }
     }
 
@@ -301,17 +337,31 @@ public class EnemyAI : MonoBehaviour
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, nextWaypointFloat);
+
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(transform.position, sightRange);
+
         Gizmos.color = Color.blue;
         Gizmos.DrawWireSphere(transform.position, nextWaypointFloat);
+
         Gizmos.color = Color.cyan;
         Gizmos.DrawWireCube(transform.position, nextWaypointDistance);
+
         Gizmos.color = Color.magenta;
         Gizmos.DrawWireCube(jumpDetectorPlayer.position, jumpDetectorSize);
+
         Gizmos.color = Color.white;
         Vector3 direction = transform.TransformDirection(Vector2.down) * rayDistanceJump;
         Gizmos.DrawRay(transform.position, direction);
-        
+
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireCube(playerAboveTransform.position, playerAboveJumpSize);
+
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireCube(playerBelowTransform.position, playerBelowJumpSize);
+
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireCube(groundInFront.position, groundInFrontSize);
+
     }
 }

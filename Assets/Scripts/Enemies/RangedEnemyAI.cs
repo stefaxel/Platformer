@@ -6,24 +6,13 @@ using System.Threading;
 
 public class RangedEnemyAI : EnemyAI
 {
+    [Header("Projectile Settings")]
     [SerializeField] private Transform firePoint;
     [SerializeField] GameObject[] bullet;
-    bool playerIsAbove;
-    [SerializeField] private Vector2 playerAboveJumpSize;
-    [SerializeField] private Transform playerAboveTransform;
-    bool playerIsBelow;
-    [SerializeField] private Vector2 playerBelowJumpSize;
-    [SerializeField] private Transform playerBelowTransform;
-
-    [SerializeField] private Transform groundInFront;
-    [SerializeField] private Vector2 groundInFrontSize;
-    bool isGroundInFront;
-    [SerializeField] private LayerMask whatIsInFront;
-
     [SerializeField] private float attackDelay;
     private float attackDelayTimer;
     
-    bool playerJumpedToPlatform;
+    //bool playerJumpedToPlatform;
     //RaycastHit2D isGroundEdge;
 
     protected override void Start()
@@ -49,23 +38,6 @@ public class RangedEnemyAI : EnemyAI
     protected override void AIChecks()
     {
         base.AIChecks();
-
-        playerIsAbove = Physics2D.OverlapBox(playerAboveTransform.position, playerAboveJumpSize, 0, whatIsPlayer);
-
-        playerIsBelow = Physics2D.OverlapBox(playerBelowTransform.position, playerBelowJumpSize, 0, whatIsPlayer);
-
-        isGroundInFront = Physics2D.OverlapBox(groundInFront.position, groundInFrontSize, 0, whatIsInFront);
-
-
-        if (playerIsAbove && IsGrounded())
-            EnemyJump();
-
-        if(playerIsBelow && IsGrounded())
-            EnemyJump();
-
-        if (isGroundInFront)
-            EnemyJump();
-
     }
 
     protected override void Patrol()
@@ -80,27 +52,13 @@ public class RangedEnemyAI : EnemyAI
 
     protected override void EnemyJump()
     {
-        RaycastHit2D isGround = Physics2D.Raycast(transform.position, Vector2.down, rayDistance);
-        
-        if (playerIsAbove)
-        {
-            rb.AddForce(Vector2.up * jumpForce);
-        }
-            
-        if (playerIsBelow && !isGround.collider)
-        {
-            rb.AddForce(Vector2.up * 50f);
-        }
-
-        if (isGroundInFront)
-            rb.AddForce(Vector2.up * 150f);
-
+        base.EnemyJump();
     }
 
     protected override void AttackPlayer()
     {
         Collider2D collider = Physics2D.OverlapBox(attackDetection.position, detectorSize, 0, whatIsPlayer);
-        
+
         Flip();
 
         if (collider != null)
@@ -142,28 +100,11 @@ public class RangedEnemyAI : EnemyAI
 
     protected override void OnDrawGizmos()
     {
-        if (showGizmos)
-        {
-            Gizmos.color = gizmoColor;
-            Gizmos.DrawSphere(transform.position, nextWaypointFloat);
-        }
-        if (showAttackGizmo)
-        {
-            Gizmos.color = Color.red;
-            Gizmos.DrawWireCube(attackDetection.position, detectorSize);
-        }
+        base.OnDrawGizmos();
     }
 
     protected override void OnDrawGizmosSelected()
     {
         base.OnDrawGizmosSelected();
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawWireCube(playerAboveTransform.position, playerAboveJumpSize);
-
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawWireCube(playerBelowTransform.position, playerBelowJumpSize);
-
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireCube(groundInFront.position, groundInFrontSize);
     }
 }

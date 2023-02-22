@@ -254,7 +254,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 47f121b4857781342a66fd7fda427fc0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 8
+  speed: 10
 --- !u!212 &89731342
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -820,7 +820,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 329535701}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -5, y: 1.4, z: 0}
+  m_LocalPosition: {x: -7.5, y: 1.4, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2193,7 +2193,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 47f121b4857781342a66fd7fda427fc0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 8
+  speed: 10
 --- !u!212 &677350237
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -2355,7 +2355,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 47f121b4857781342a66fd7fda427fc0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 8
+  speed: 10
 --- !u!212 &693336944
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -2911,7 +2911,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 47f121b4857781342a66fd7fda427fc0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 8
+  speed: 10
 --- !u!212 &937671393
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -3488,6 +3488,15 @@ MonoBehaviour:
   jumpForce: 400
   jumpDetectorSize: {x: 6.5, y: 1}
   jumpDetectorOffset: {x: 0, y: 0}
+  playerAboveJumpSize: {x: 0, y: 0}
+  playerAboveTransform: {fileID: 0}
+  playerBelowJumpSize: {x: 0, y: 0}
+  playerBelowTransform: {fileID: 0}
+  groundInFront: {fileID: 0}
+  groundInFrontSize: {x: 0, y: 0}
+  whatIsInFront:
+    serializedVersion: 2
+    m_Bits: 0
   whatIsGround:
     serializedVersion: 2
     m_Bits: 8
@@ -3743,7 +3752,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 47f121b4857781342a66fd7fda427fc0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 8
+  speed: 10
 --- !u!212 &1124207756
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -4206,8 +4215,17 @@ MonoBehaviour:
   detectionDelay: 0.2
   jumpDetectorPlayer: {fileID: 329535702}
   jumpForce: 600
-  jumpDetectorSize: {x: 5, y: 1.2}
+  jumpDetectorSize: {x: 1, y: 1}
   jumpDetectorOffset: {x: 0, y: 0}
+  playerAboveJumpSize: {x: 4, y: 7}
+  playerAboveTransform: {fileID: 725039861}
+  playerBelowJumpSize: {x: 4, y: 7}
+  playerBelowTransform: {fileID: 1268129673}
+  groundInFront: {fileID: 813803012}
+  groundInFrontSize: {x: 0.5, y: 0.5}
+  whatIsInFront:
+    serializedVersion: 2
+    m_Bits: 8
   whatIsGround:
     serializedVersion: 2
     m_Bits: 8
@@ -4226,15 +4244,6 @@ MonoBehaviour:
   - {fileID: 1357296531}
   - {fileID: 1393180917}
   - {fileID: 1124207753}
-  playerAboveJumpSize: {x: 4, y: 7}
-  playerAboveTransform: {fileID: 725039861}
-  playerBelowJumpSize: {x: 4, y: 7}
-  playerBelowTransform: {fileID: 1268129673}
-  groundInFront: {fileID: 813803012}
-  groundInFrontSize: {x: 0.5, y: 0.5}
-  whatIsInFront:
-    serializedVersion: 2
-    m_Bits: 8
   attackDelay: 0.55
 --- !u!114 &1294391716
 MonoBehaviour:
@@ -4481,7 +4490,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 47f121b4857781342a66fd7fda427fc0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 8
+  speed: 10
 --- !u!212 &1296093164
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -5024,7 +5033,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 47f121b4857781342a66fd7fda427fc0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 8
+  speed: 10
 --- !u!212 &1357296534
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -5256,7 +5265,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 47f121b4857781342a66fd7fda427fc0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 8
+  speed: 10
 --- !u!212 &1393180920
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -5743,7 +5752,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 47f121b4857781342a66fd7fda427fc0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 8
+  speed: 10
 --- !u!58 &1583594843
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -5989,7 +5998,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 47f121b4857781342a66fd7fda427fc0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 8
+  speed: 10
 --- !u!212 &1672671782
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -66228,7 +66237,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 47f121b4857781342a66fd7fda427fc0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 8
+  speed: 10
 --- !u!212 &2061915903
 SpriteRenderer:
   m_ObjectHideFlags: 0
