@@ -71,11 +71,18 @@ public class EnemyAI : MonoBehaviour
     [SerializeField] protected float jumpDelay;
     protected float jumpTimer;
 
-
     protected bool reachedEndOfPath;
     protected bool facingRight = true;
     protected bool playerEncountered = false;
     protected bool wasFacingRight;
+
+    protected Animator animator;
+
+    protected virtual void Awake()
+    {
+        animator = GetComponent<Animator>();
+    }
+
     // Start is called before the first frame update
     protected virtual void Start()
     {
@@ -85,15 +92,7 @@ public class EnemyAI : MonoBehaviour
         InvokeRepeating("UpdatePath", 0f, 0.5f);
 
         nextWaypointFloat = nextWaypointDistance.x/2f;
-        //StartCoroutine(PlayerDetection());
     }
-
-    //IEnumerator PlayerDetection()
-    //{
-    //    yield return new WaitForSeconds(detectionDelay);
-    //    AttackPlayer();
-    //    StartCoroutine(PlayerDetection());
-    //}
 
     protected virtual void UpdatePath()
     {
@@ -159,6 +158,8 @@ public class EnemyAI : MonoBehaviour
 
     protected virtual void Patrol()
     {
+        animator.SetBool("moving", true);
+
         if (playerEncountered && !playerInSight)
             Flip();
 
@@ -254,6 +255,7 @@ public class EnemyAI : MonoBehaviour
             Vector3 force = direction * attackSpeed * Time.deltaTime;
 
             rb.AddForce(force);
+            animator.SetTrigger("attack");
             
             Collider2D attackCollider = Physics2D.OverlapBox((Vector2)attackPoint.position + detectorOffset, attackPointSize, 0, whatIsPlayer);
             if (attackCollider != null)
@@ -263,7 +265,7 @@ public class EnemyAI : MonoBehaviour
         }
         else
         {
-            Debug.Log("not in range");
+            animator.SetBool("moving", false);
         }
 
     }

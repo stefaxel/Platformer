@@ -11,9 +11,14 @@ public class RangedEnemyAI : EnemyAI
     [SerializeField] GameObject[] bullet;
     [SerializeField] private float attackDelay;
     private float attackDelayTimer;
-    
+
     //bool playerJumpedToPlatform;
     //RaycastHit2D isGroundEdge;
+
+    protected override void Awake()
+    {
+        base.Awake();
+    }
 
     protected override void Start()
     {
@@ -64,6 +69,8 @@ public class RangedEnemyAI : EnemyAI
         if (collider != null)
         {
             bullet[FindBullets()].transform.position = firePoint.position;
+
+            animator.SetTrigger("attack");
             
             attackDelayTimer += Time.deltaTime;
             if(attackDelayTimer >= attackDelay)
@@ -74,7 +81,7 @@ public class RangedEnemyAI : EnemyAI
         }
         else
         {
-            Debug.Log("not in range");
+            animator.SetBool("moving", false);
         }
     }
 

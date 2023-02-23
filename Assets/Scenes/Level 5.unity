@@ -188,7 +188,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 62031859}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -7, y: -4.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -286,6 +286,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 10
+  bulletLifetime: 5
+  damage: 1
 --- !u!212 &89731342
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -2225,6 +2227,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 10
+  bulletLifetime: 5
+  damage: 1
 --- !u!212 &677350237
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -2387,6 +2391,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 10
+  bulletLifetime: 5
+  damage: 1
 --- !u!212 &693336944
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -2943,6 +2949,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 10
+  bulletLifetime: 5
+  damage: 1
 --- !u!212 &937671393
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -3308,7 +3316,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!61 &1000594402
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -3442,7 +3450,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1000594399}
   m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
-  m_LocalPosition: {x: 14.5, y: 3.71, z: 0}
+  m_LocalPosition: {x: 12.54, y: 3.55, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -3497,12 +3505,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetPosition: {fileID: 1701177796}
   speed: 1000
-  nextWaypointDistance: {x: 11, y: 2}
-  nextWaypointFloat: 6
+  nextWaypointDistance: {x: 14, y: 2}
+  nextWaypointFloat: 7
   whatIsPlayer:
     serializedVersion: 2
     m_Bits: 128
-  sightRange: 9
+  sightRange: 11
   gizmoColor: {r: 0, g: 1, b: 0, a: 0.19215687}
   attackGizmo: {r: 1, g: 0.0000002304713, b: 0, a: 0}
   showGizmos: 1
@@ -3516,15 +3524,15 @@ MonoBehaviour:
   detectorOffset: {x: 0, y: 0}
   attackPointSize: {x: 0.5, y: 1}
   attackPointOffset: {x: 0, y: 0}
-  attackSpeed: 200
+  attackSpeed: 300
   detectionDelay: 0.2
   jumpDetectorPlayer: {fileID: 1417981444}
   jumpForce: 400
-  jumpDetectorSize: {x: 6.5, y: 1}
+  jumpDetectorSize: {x: 1, y: 1}
   jumpDetectorOffset: {x: 0, y: 0}
-  playerAboveJumpSize: {x: 0, y: 0}
+  playerAboveJumpSize: {x: 6, y: 7}
   playerAboveTransform: {fileID: 1510137927}
-  playerBelowJumpSize: {x: 0, y: 0}
+  playerBelowJumpSize: {x: 6, y: 7}
   playerBelowTransform: {fileID: 62031860}
   groundInFront: {fileID: 2094560219}
   groundInFrontSize: {x: 0, y: 0}
@@ -3787,6 +3795,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 10
+  bulletLifetime: 5
+  damage: 1
 --- !u!212 &1124207756
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -4381,7 +4391,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1294391711}
   m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
-  m_LocalPosition: {x: -7.52, y: -1.46, z: 0}
+  m_LocalPosition: {x: 14, y: 3.58, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -4478,7 +4488,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1294419459}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 16.28, y: 3.72, z: -10}
+  m_LocalPosition: {x: -14.41, y: -1.48, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -4546,6 +4556,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 10
+  bulletLifetime: 5
+  damage: 1
 --- !u!212 &1296093164
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -5089,6 +5101,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 10
+  bulletLifetime: 5
+  damage: 1
 --- !u!212 &1357296534
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -5321,6 +5335,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 10
+  bulletLifetime: 5
+  damage: 1
 --- !u!212 &1393180920
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -5447,7 +5463,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1417981443}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3.7, y: 1.4, z: 0}
+  m_LocalPosition: {x: -3.5, y: 1.4, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -5624,7 +5640,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1510137926}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -7, y: 4.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -5839,6 +5855,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 10
+  bulletLifetime: 5
+  damage: 1
 --- !u!58 &1583594843
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -6085,6 +6103,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 10
+  bulletLifetime: 5
+  damage: 1
 --- !u!212 &1672671782
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -66324,6 +66344,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 10
+  bulletLifetime: 5
+  damage: 1
 --- !u!212 &2061915903
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -66589,7 +66611,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2094560218}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -0.75, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -66727,11 +66749,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3321939312309938209, guid: 5db4cc160e6a33b41bb19a37d2e80947, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 16.28
+      value: -14.41
       objectReference: {fileID: 0}
     - target: {fileID: 3321939312309938209, guid: 5db4cc160e6a33b41bb19a37d2e80947, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 3.72
+      value: -1.48
       objectReference: {fileID: 0}
     - target: {fileID: 3321939312309938209, guid: 5db4cc160e6a33b41bb19a37d2e80947, type: 3}
       propertyPath: m_LocalPosition.z
@@ -66808,11 +66830,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5908484128589313644, guid: 432ad0eb7276c4b42b5d963b83995861, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 16.28
+      value: -14.41
       objectReference: {fileID: 0}
     - target: {fileID: 5908484128589313644, guid: 432ad0eb7276c4b42b5d963b83995861, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 3.72
+      value: -1.48
       objectReference: {fileID: 0}
     - target: {fileID: 5908484128589313644, guid: 432ad0eb7276c4b42b5d963b83995861, type: 3}
       propertyPath: m_LocalPosition.z
