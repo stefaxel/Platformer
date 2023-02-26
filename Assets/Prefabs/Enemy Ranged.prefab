@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3036450535274557131}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Player Above Detection
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -44,7 +44,7 @@ GameObject:
   - component: {fileID: 3036450535298113378}
   - component: {fileID: 3036450535298113381}
   - component: {fileID: 3036450535298113377}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Bullet (5)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -208,7 +208,7 @@ GameObject:
   - component: {fileID: 3036450535314157393}
   - component: {fileID: 3036450535314157392}
   - component: {fileID: 3036450535314157388}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Bullet (6)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -372,7 +372,7 @@ GameObject:
   - component: {fileID: 3036450535352905438}
   - component: {fileID: 3036450535352905441}
   - component: {fileID: 3036450535352905437}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Bullet (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -532,7 +532,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3036450535434826298}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Ground Detection In Front
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -567,7 +567,7 @@ GameObject:
   - component: {fileID: 3036450535650338099}
   - component: {fileID: 3036450535650338098}
   - component: {fileID: 3036450535650338094}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Bullet (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -727,7 +727,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3036450535757053454}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Attack Point
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -759,7 +759,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3036450535882885284}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Attack Check
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -790,7 +790,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3036450535953057000}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Jump Detector
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -825,7 +825,7 @@ GameObject:
   - component: {fileID: 3036450536222123547}
   - component: {fileID: 3036450536222123546}
   - component: {fileID: 3036450536222123542}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Bullet (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -985,7 +985,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3036450536301380087}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Edge Detection
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1016,7 +1016,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3036450536540306552}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Holder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1062,7 +1062,7 @@ GameObject:
   - component: {fileID: 3036450536611431104}
   - component: {fileID: 3036450536611431107}
   - component: {fileID: 3036450536611431231}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Bullet (7)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1226,7 +1226,7 @@ GameObject:
   - component: {fileID: 3036450536751667381}
   - component: {fileID: 3036450536751667380}
   - component: {fileID: 3036450536751667376}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Bullet (10)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1394,7 +1394,7 @@ GameObject:
   - component: {fileID: 3036450536850476447}
   - component: {fileID: 3036450536850476446}
   - component: {fileID: 3036450536850476438}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Enemy Ranged
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1516,6 +1516,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 3
+  audioImpact: {fileID: 8300000, guid: c1321952f60d47745a4e337c7dcc977a, type: 3}
 --- !u!114 &3036450536850476445
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1733,7 +1734,7 @@ GameObject:
   - component: {fileID: 3036450536856640469}
   - component: {fileID: 3036450536856640468}
   - component: {fileID: 3036450536856640464}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Bullet (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1893,7 +1894,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3036450536895581111}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Jump below detection
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1928,7 +1929,7 @@ GameObject:
   - component: {fileID: 3036450537020642505}
   - component: {fileID: 3036450537020642504}
   - component: {fileID: 3036450537020642500}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Bullet (9)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2092,7 +2093,7 @@ GameObject:
   - component: {fileID: 3036450537047599019}
   - component: {fileID: 3036450537047599018}
   - component: {fileID: 3036450537047599014}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Bullet (8)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2256,7 +2257,7 @@ GameObject:
   - component: {fileID: 3036450537072568676}
   - component: {fileID: 3036450537072568679}
   - component: {fileID: 3036450537072568677}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Bullet
   m_TagString: Untagged
   m_Icon: {fileID: 0}

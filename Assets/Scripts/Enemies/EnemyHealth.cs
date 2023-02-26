@@ -5,6 +5,9 @@ using UnityEngine;
 public class EnemyHealth : MonoBehaviour
 {
     [SerializeField] private int health;
+    
+    [SerializeField]
+    protected AudioClip audioImpact;
     private int currentHealth;
 
     private Animator animator;
@@ -36,6 +39,7 @@ public class EnemyHealth : MonoBehaviour
         {
             animator.SetTrigger("hit");
             health--;
+            SoundManager.instance.PlaySound(audioImpact);
 
         }
     }

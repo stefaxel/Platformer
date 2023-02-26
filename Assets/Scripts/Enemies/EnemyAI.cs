@@ -5,6 +5,7 @@ using Pathfinding;
 using UnityEngine.InputSystem.XR;
 using UnityEditor.Tilemaps;
 using System;
+using UnityEngine.UIElements;
 
 public class EnemyAI : MonoBehaviour
 {
@@ -75,6 +76,7 @@ public class EnemyAI : MonoBehaviour
     protected bool facingRight = true;
     protected bool playerEncountered = false;
     protected bool wasFacingRight;
+    protected float enemyBounds = -20f;
 
     protected Animator animator;
 
@@ -113,6 +115,9 @@ public class EnemyAI : MonoBehaviour
     protected virtual void FixedUpdate()
     {
         AIChecks();
+
+        if(transform.position.y <= enemyBounds)
+            this.gameObject.SetActive(false);
     }
 
     protected virtual void AIChecks()

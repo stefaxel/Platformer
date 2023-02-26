@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: 8850303522108417870}
   - component: {fileID: 8850303522108417859}
   - component: {fileID: 8850303522108417869}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Enemy Melee
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -139,6 +139,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 3
+  audioImpact: {fileID: 8300000, guid: c1321952f60d47745a4e337c7dcc977a, type: 3}
 --- !u!114 &8850303522108417868
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -338,7 +339,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8850303522512075600}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Jump below detection
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -369,7 +370,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8850303522515278773}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Attack Check
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -400,7 +401,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8850303522527724773}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Edge Detection
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -431,7 +432,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8850303523134541695}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Ground Detection In Front
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -462,7 +463,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8850303523263231927}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Attack Point
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -493,7 +494,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8850303523691699427}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Player Above Detection
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -524,7 +525,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8850303523801158304}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Jump Detector
   m_TagString: Untagged
   m_Icon: {fileID: 0}
