@@ -215,6 +215,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: ButtonSFX, Assembly-CSharp
+        m_MethodName: OnButtonPress
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &2982368843001939577
 GameObject:
   m_ObjectHideFlags: 0
@@ -2889,9 +2901,9 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: -315, y: 44}
+  m_AnchoredPosition: {x: -465, y: 65.061}
   m_SizeDelta: {x: 295.4607, y: 46.103607}
-  m_Pivot: {x: 0.49999985, y: 0.50000095}
+  m_Pivot: {x: 0, y: 1}
 --- !u!222 &7477403545645927792
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -3373,9 +3385,9 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: -339.21, y: 107}
+  m_AnchoredPosition: {x: -465, y: 123}
   m_SizeDelta: {x: 247.04968, y: 57.939392}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_Pivot: {x: 0, y: 1}
 --- !u!222 &7477403545848130756
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -4243,8 +4255,8 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7477403545645927793}
-  - {fileID: 7477403546019296151}
   - {fileID: 7477403545848130752}
+  - {fileID: 7477403546019296151}
   - {fileID: 7477403545099175587}
   m_Father: {fileID: 7477403545458273219}
   m_RootOrder: -1
@@ -4273,6 +4285,7 @@ MonoBehaviour:
   timeCounter: {fileID: 7477403546019296144}
   pauseUI: {fileID: 7477403545002151688}
   volumeUI: {fileID: 2074081118615253343}
+  scoreSO: {fileID: 11400000, guid: 65556236b275508418c7a06047a868ba, type: 2}
 --- !u!1 &7477403546078624042
 GameObject:
   m_ObjectHideFlags: 0

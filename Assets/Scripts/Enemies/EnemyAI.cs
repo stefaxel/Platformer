@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using Pathfinding;
 using UnityEngine.InputSystem.XR;
-using UnityEditor.Tilemaps;
 using System;
 using UnityEngine.UIElements;
 
@@ -22,7 +21,6 @@ public class EnemyAI : MonoBehaviour
     [SerializeField] protected LayerMask whatIsPlayer;
     protected int currentWaypoint = 0;
     [SerializeField] protected float sightRange;
-    //[SerializeField] private float attackRange;
     protected bool playerInSight;
     protected bool playerInAttack;
 
@@ -41,7 +39,6 @@ public class EnemyAI : MonoBehaviour
     [Header("Attack Settings")]
     [SerializeField] protected Transform attackDetection;
     [SerializeField] private Transform attackPoint;
-    //private bool inAtotectedange;
     [SerializeField] protected Vector2 detectorSize;
     [SerializeField] protected Vector2 detectorOffset;
     [SerializeField] private Vector2 attackPointSize;
@@ -122,9 +119,10 @@ public class EnemyAI : MonoBehaviour
 
     protected virtual void AIChecks()
     {
-        playerInSight = Physics2D.OverlapCircle(transform.position, sightRange, whatIsPlayer);
-        playerInAttack = Physics2D.OverlapBox(transform.position, nextWaypointDistance, 0, whatIsPlayer);
+        playerInSight = Physics2D.OverlapCircle(transform.position, sightRange, whatIsPlayer); //Checks to see if the player is in sight for pathfinding
+        playerInAttack = Physics2D.OverlapBox(transform.position, nextWaypointDistance, 0, whatIsPlayer); //Checks to see if the player is in attack range
 
+        // Jumping conditions
         playerHasJumped = Physics2D.OverlapBox(jumpDetectorPlayer.position, jumpDetectorSize, 0, whatIsPlayer);
         playerIsAbove = Physics2D.OverlapBox(playerAboveTransform.position, playerAboveJumpSize, 0, whatIsPlayer);
         playerIsBelow = Physics2D.OverlapBox(playerBelowTransform.position, playerBelowJumpSize, 0, whatIsPlayer);
@@ -161,6 +159,7 @@ public class EnemyAI : MonoBehaviour
 
     }
 
+    //Patroling state for the AI
     protected virtual void Patrol()
     {
         animator.SetBool("moving", true);
@@ -171,6 +170,7 @@ public class EnemyAI : MonoBehaviour
         rb.velocity = new Vector2(patrolSpeed * Time.deltaTime, rb.velocity.y);
         RaycastHit2D isGround = Physics2D.Raycast(groundDetection.position, Vector2.down, rayDistance);
 
+        //If the raycast doesn't detect ground, it will flip the sprite and change direction
         if (!isGround.collider)
             Flip(); 
     }
@@ -220,6 +220,7 @@ public class EnemyAI : MonoBehaviour
         rb.AddForce(force);
     }
 
+    //Conditions that allow the AI to Jump when chasing the player
     protected virtual void EnemyJump()
     {
         RaycastHit2D isGround = Physics2D.Raycast(transform.position, Vector2.down, rayDistance);
@@ -253,8 +254,10 @@ public class EnemyAI : MonoBehaviour
 
         Flip();
 
+        //If the player collides with the collider the enemy can attack
         if (collider != null)
         {
+            //Allows the AI to know which direction to move in
             distance = Vector2.Distance(transform.position, targetPosition.position);
             Vector2 direction = targetPosition.position - transform.position;
             Vector3 force = direction * attackSpeed * Time.deltaTime;
@@ -277,6 +280,7 @@ public class EnemyAI : MonoBehaviour
 
     protected virtual void Flip()
     {
+        // Makes the nemy face the correct direction once the player has escaped its range
         wasFacingRight = facingRight;
 
         if (!playerInSight)
@@ -290,7 +294,6 @@ public class EnemyAI : MonoBehaviour
         if ((!wasFacingRight && playerEncountered && isGoingRight) || (!wasFacingRight && hasPlayerJumped && playerEncountered && IsGrounded()))
         {
             transform.localScale = new Vector2(transform.localScale.x * -1, transform.localScale.y);
-            //facingRight= !facingRight;
             playerEncountered = false;
             hasPlayerJumped = false;
         }
@@ -307,10 +310,9 @@ public class EnemyAI : MonoBehaviour
         }
         if (playerHasJumped && playerInSight)
             playerEncountered = true;
-
-
     }
 
+    //Checks to see if the enemy is grounded, for the patrol system which allows the enmy to flip
     protected virtual bool IsGrounded()
     {
         isEnemyonGround = Physics2D.Raycast(transform.position, Vector2.down, rayDistanceJump, whatIsGround.value);

@@ -12,7 +12,6 @@ public class Spikehead : DamageScript
     [SerializeField] protected float sightRange;
     [SerializeField] protected float attackDelay;
     [SerializeField] protected LayerMask playerLayer;
-    //[SerializeField] protected int damage;
     [SerializeField] protected float enemyHealth;
     protected float attackTimer;
     protected Vector3 destination;
@@ -42,8 +41,6 @@ public class Spikehead : DamageScript
         }
 
         OnDeath();
-        //if(enemyHealth <= 0)
-        //    Destroy(gameObject);
 
     }
 

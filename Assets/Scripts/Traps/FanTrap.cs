@@ -25,12 +25,6 @@ public class FanTrap : MonoBehaviour
         StartCoroutine(FanTrapTrigger());
     }
 
-    private void Update()
-    {
-        if(!fanIsActive)
-            StartCoroutine(FanTrapTrigger());
-    }
-
     IEnumerator FanTrapTrigger()
     {
         if (!isActive)
@@ -55,6 +49,9 @@ public class FanTrap : MonoBehaviour
             fanIsActive = false;
             audioSource.Stop();
         }
+
+        if(!fanIsActive)
+            StartCoroutine(FanTrapTrigger());
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

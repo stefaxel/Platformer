@@ -18,6 +18,7 @@ public class Bullet : MonoBehaviour
 
         transform.Translate(movementSpeed, 0, 0);
 
+        //Destorys the bullet after a certain time set in the inspector
         if(bulletLifetimeTimer >= bulletLifetime)
         {
             this.gameObject.SetActive(false);
@@ -25,6 +26,7 @@ public class Bullet : MonoBehaviour
         }
     }
 
+    //Collision Detection for the bullet
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if(collision.tag == "Player")

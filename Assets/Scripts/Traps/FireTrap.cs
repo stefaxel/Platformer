@@ -6,7 +6,6 @@ public class FireTrap : DamageScript
 {
     [SerializeField] float onTime;
     [SerializeField] float offTime;
-    //[SerializeField] int damage;
 
     private bool isActive;
     private bool fireIsActive = false;
@@ -25,13 +24,7 @@ public class FireTrap : DamageScript
         StartCoroutine(FireTrapTrigger());
     }
 
-    // Update is called once per frame
-    void FixedUpdate()
-    {
-        if (!fireIsActive)
-            StartCoroutine(FireTrapTrigger());
-    }
-
+    //Coroutine that handles animation and the active time of the fire trap
     private IEnumerator FireTrapTrigger()
     {
         if(!isActive)
@@ -59,13 +52,15 @@ public class FireTrap : DamageScript
                 animationActive = true;
             }
             
-            //SoundManager.instance.PlaySound(fireAudio);
             canTakeDamage = true;
             yield return new WaitForSeconds(onTime);
             isActive = false;
             fireIsActive = false;
             audioSource.Stop();
         }
+
+        if (!fireIsActive)
+            StartCoroutine(FireTrapTrigger());
     }
 
     protected override void OnTriggerEnter2D(Collider2D collision)

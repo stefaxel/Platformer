@@ -4,6 +4,8 @@ using System.Runtime.InteropServices;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+
+//Script that plays a sound and loads the next level once the player has completed the level
 public class CheckpointEnd : MonoBehaviour
 {
     Collider2D boxCollider;
@@ -30,8 +32,6 @@ public class CheckpointEnd : MonoBehaviour
             Invoke("LoadNextScene", 1f);
             
             levelCompleted = true;
-            //Time.timeScale = 0;
-            
         }
     }
 

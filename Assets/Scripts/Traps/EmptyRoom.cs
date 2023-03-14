@@ -15,6 +15,7 @@ public class EmptyRoom : MonoBehaviour
         CheckForEnemies();
     }
 
+    //Checks the number of enemies in the room which opens a door when there are no enemies left
     public void CheckForEnemies()
     {
         for(int i = 0; i < enemies.Length; i++)

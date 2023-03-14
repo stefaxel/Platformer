@@ -27,7 +27,6 @@ public class EnemyHealth : MonoBehaviour
         if (collision.tag == "Player")
         {
             TakeDamage();
-            //animator.SetTrigger("hit");
             if (health <= 0)
                 this.gameObject.SetActive(false);
         }

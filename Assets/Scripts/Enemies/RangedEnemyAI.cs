@@ -4,6 +4,7 @@ using UnityEngine;
 using Pathfinding;
 using System.Threading;
 
+//Script inherits from the EnemyAI script and has the same pathfinding abilities
 public class RangedEnemyAI : EnemyAI
 {
     [Header("Projectile Settings")]
@@ -11,9 +12,6 @@ public class RangedEnemyAI : EnemyAI
     [SerializeField] GameObject[] bullet;
     [SerializeField] private float attackDelay;
     private float attackDelayTimer;
-
-    //bool playerJumpedToPlatform;
-    //RaycastHit2D isGroundEdge;
 
     protected override void Awake()
     {
@@ -60,6 +58,7 @@ public class RangedEnemyAI : EnemyAI
         base.EnemyJump();
     }
 
+    //This enemy can shoot bullets, which the regular EnemyAI script can't
     protected override void AttackPlayer()
     {
         Collider2D collider = Physics2D.OverlapBox(attackDetection.position, detectorSize, 0, whatIsPlayer);

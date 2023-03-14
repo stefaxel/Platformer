@@ -164,14 +164,6 @@ public class PlayerMovement : MonoBehaviour
     public void OnJump(InputAction.CallbackContext context)
     {
         Jump(context);
-
-
-        //if (!IsGrounded() && IsWallClimbing() && context.performed && wallAction.IsPressed())
-        //{
-        //    wallJumpCooldown = 0;
-        //    rb.AddForce(Vector2.up * jumpForce);
-
-        //}
     }
 
     public void WallClimb(InputAction.CallbackContext context)

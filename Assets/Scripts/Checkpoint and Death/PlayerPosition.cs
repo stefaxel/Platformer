@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using UnityEngine;
 
+// Script that handles spawning and respawning
 public class PlayerPosition : MonoBehaviour
 {
     Vector2 checkpointPosition;
